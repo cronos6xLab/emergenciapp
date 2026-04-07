@@ -1,40 +1,441 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="description" content="ID de Emergencia Vial — Sistema de respuesta rapida para accidentes de transito" />
-  <title>ID de Emergencia Vial<titlee>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-    body {
-      background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      min-height: 100vh;
-      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #F1F5F9;
-      padding: 12px 0 40px;
-    }
- 
-    .container {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 0 14px;
-    }
- 
-    /* ---------- HEADER ---------- */
-    .header {
-      text-align: center;
-      padding: 32px 0 24px;
-    }
- 
-    @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.55); }
-      70%  { box-shadow: 0 0 0 22px rgba(220,38,38,0); }
-      100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
-    }
- 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Emergencia QR - Información médica vital para paramédicos y testigos">
+    <title>🚨 EMERGENCIA - QR VITAL</title>
+    
+    <!-- Leaflet Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        :root {
+            --emergency-red: #ff0040;
+            --emergency-dark: #b3002d;
+            --alert-yellow: #ffdd00;
+            --safe-green: #00ff88;
+            --info-cyan: #00d4ff;
+            --dark-bg: #0a0a0f;
+            --glass-bg: rgba(20, 20, 35, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255,0,64,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,212,255,0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(180deg, rgba(255,0,64,0.2) 0%, transparent 100%);
+            border-bottom: 3px solid var(--emergency-red);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px var(--emergency-red);
+            margin-bottom: 0.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Instructions Panel */
+        .instructions-panel {
+            max-width: 900px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .instructions {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .instructions h2 {
+            color: var(--alert-yellow);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-list {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .step {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            border-left: 4px solid var(--emergency-red);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            background: var(--emergency-red);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+    <header class="header">
+        <h1>🚨 EMERGENCIA MÉDICA 🚨</h1>
+        <p>Información vital para paramédicos y testigos</p>
+    </header>
+
+    <div class="instructions">
+        <h2>📋 INSTRUCCIONES CLARAS</h2>
+        <ol>
+            <li>¡ESTO ES UNA EMERGENCIA! Presiona el botón ROJO grande abajo</li>
+            <li>Aparecerán datos médicos CRÍTICOS de la persona</li>
+            <li>Usa los botones para LLAMAR, WhatsApp o copiar mensaje</li>
+            <li>Comparte ubicación exacta con servicios de emergencia</li>
+            <li>El escaneo se registró automáticamente con fecha y GPS</li>
+        </ol>
+    </div>
+
+    <div class="qr-hint">
+        💡 Este QR se generó para <strong>[NOMBRE_PERSONA]</strong> • Escaneado: <span id="scan-time"></span>
+    </div>
+
+    <button class="emergency-btn" onclick="revealEmergency()">
+        🚨 ¡EMERGENCIA! MOSTRAR DATOS VITALES 🚨
+    </button>
+
+    <div id="emergency-info">
+        <!-- ===== SECCIÓN PERSONALIZABLE - EDITA AQUÍ PARA CADA PERSONA ===== -->
+        <div id="personal-data">
+            <!-- 
+                ========================================================
+                ¡IMPORTANTE! Edita solo esta sección para cada persona
+                Crea un repositorio GitHub separado por persona:
+                ej: github.com/tuusuario/emergencia-[nombre]
+                ========================================================
+            -->
+            <script>
+                // ===== DATOS DE LA PERSONA - CAMBIA ESTOS VALORES =====
+                const PERSONA = {
+                    nombre: 'JUAN PÉREZ GARCÍA',
+                    edad: 35,
+                    tipoSangre: 'O+',
+                    alergias: 'Penicilina, Nueces, Mariscos',
+                    condiciones: 'Diabetes tipo 2, Hipertensión',
+                    medicamentos: 'Metformina 500mg diario, Losartán 50mg',
+                    peso: '78 kg',
+                    altura: '1.75 m',
+                    historial: 'Cirugía apendicitis 2018, Fractura pierna 2020',
+                    
+                    contactos: [
+                        { nombre: 'Esposa - MARÍA', telefono: '+52 55 1234 5678', rel: 'EMERGENCIA PRINCIPAL' },
+                        { nombre: 'Hermano - PEDRO', telefono: '+52 55 8765 4321', rel: 'FAMILIAR' },
+                        { nombre: 'Doctor - DR. LOPEZ', telefono: '+52 55 9999 0000', rel: 'MÉDICO' }
+                    ],
+                    
+                    direccionCasa: 'Calle Hidalgo 123, Colonia Roma Norte, CDMX 06700'
+                };
+                // ========================================================
+            </script>
+        </div>
+
+        <div class="data-section priority-1">
+            <h3>🩸 INFORMACIÓN CRÍTICA MÉDICA</h3>
+            <div class="data-grid">
+                <div class="data-item"><span class="data-label">Tipo de Sangre:</span> <strong id="sangre"></strong></div>
+                <div class="data-item"><span class="data-label">Alergias:</span> <strong id="alergias"></strong></div>
+                <div class="data-item"><span class="data-label">Condiciones:</span> <strong id="condiciones"></strong></div>
+                <div class="data-item"><span class="data-label">Medicamentos:</span> <strong id="medicamentos"></strong></div>
+                <div class="data-item"><span class="data-label">Peso:</span> <strong id="peso"></strong></div>
+                <div class="data-item"><span class="data-label">Edad:</span> <strong id="edad"></strong></div>
+            </div>
+        </div>
+
+        <div class="data-section priority-1">
+            <h3>📍 UBICACIÓN DEL INCIDENTE</h3>
+            <div id="scan-log"></div>
+            <div id="location-details" class="data-grid"></div>
+            <div id="location-map"></div>
+        </div>
+
+        <div class="data-section priority-2">
+            <h3>👨‍👩‍👧 CONTACTOS DE EMERGENCIA</h3>
+            <div id="contactos"></div>
+        </div>
+
+        <div class="data-section priority-3">
+            <h3>🏠 INFORMACIÓN ADICIONAL</h3>
+            <div class="data-grid">
+                <div class="data-item"><span class="data-label">Dirección Casa:</span> <strong id="direccion"></strong></div>
+                <div class="data-item"><span class="data-label">Historial:</span> <strong id="historial"></strong></div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="tel:+525599988888" class="btn btn-call">📞 Llamar 911 CDMX</a>
+            <a href="tel:+525533335333" class="btn btn-call">📞 Cruz Verde</a>
+            <a href="tel:+5218000622488" class="btn btn-call">📞 SAMU Nacional</a>
+            <button class="btn btn-whatsapp" onclick="sendWhatsApp()">💬 Enviar WhatsApp</button>
+            <button class="btn btn-message" onclick="copyMessage()">📋 Copiar Mensaje</button>
+            <button class="btn btn-copy" onclick="copyAllData()">📋 Copiar Todo</button>
+        </div>
+    </div>
+
+    <script>
+        let scanLocation = null;
+        let scanAddress = '';
+        let map = null;
+
+        // Números de emergencia México
+        const EMERGENCIAS = {
+            '911': 'Emergencias CDMX',
+            '5533335333': 'Cruz Verde',
+            '18000622488': 'SAMU Nacional',
+            '56581111': 'Cruz Roja CDMX'
+        };
+
+        async function revealEmergency() {
+            document.getElementById('emergency-info').style.display = 'block';
+            document.querySelector('.emergency-btn').style.display = 'none';
+            
+            // Llenar datos personales
+            document.getElementById('sangre').textContent = PERSONA.tipoSangre;
+            document.getElementById('alergias').textContent = PERSONA.alergias;
+            document.getElementById('condiciones').textContent = PERSONA.condiciones;
+            document.getElementById('medicamentos').textContent = PERSONA.medicamentos;
+            document.getElementById('peso').textContent = PERSONA.peso;
+            document.getElementById('edad').textContent = PERSONA.edad;
+            document.getElementById('direccion').textContent = PERSONA.direccionCasa;
+            document.getElementById('historial').textContent = PERSONA.historial;
+
+            // Contactos
+            let contactosHtml = '';
+            PERSONA.contactos.forEach(contacto => {
+                contactosHtml += `
+                    <div class="data-item">
+                        <span class="data-label">${contacto.rel}:</span> 
+                        <strong>${contacto.nombre}</strong><br>
+                        📱 <a href="tel:${contacto.telefono}" style="color:#00ff88;">${contacto.telefono}</a>
+                    </div>
+                `;
+            });
+            document.getElementById('contactos').innerHTML = `<div class="data-grid">${contactosHtml}</div>`;
+
+            // Registrar escaneo
+            const scanTime = new Date().toLocaleString('es-MX', { timeZone: 'America/Mexico_City' });
+            document.getElementById('scan-time').textContent = scanTime;
+
+            // Obtener ubicación
+            await getCurrentLocation();
+            
+            // Inicializar mapa
+            initMap();
+        }
+
+        async function getCurrentLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    alert('Geolocalización no soportada');
+                    resolve(null);
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        scanLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        // Reverse geocoding para calle/colonia
+                        try {
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${scanLocation.lat}&lon=${scanLocation.lng}&zoom=18&addressdetails=1`
+                            );
+                            const data = await response.json();
+                            scanAddress = data.display_name || 'Ubicación aproximada';
+                            
+                            document.getElementById('scan-log').innerHTML = `
+                                <strong>🕒 Escaneo registrado:</strong> ${new Date().toLocaleString('es-MX')}<br>
+                                <strong>📍 GPS:</strong> ${scanLocation.lat.toFixed(6)}, ${scanLocation.lng.toFixed(6)}<br>
+                                <strong>🗺️ Dirección:</strong> ${scanAddress}
+                            `;
+
+                            const locationDetails = document.getElementById('location-details');
+                            locationDetails.innerHTML = `
+                                <div class="data-item"><span class="data-label">Lat/Long:</span> ${scanLocation.lat.toFixed(6)}, ${scanLocation.lng.toFixed(6)}</div>
+                                <div class="data-item"><span class="data-label">Dirección:</span> ${scanAddress}</div>
+                            `;
+                        } catch (e) {
+                            console.error('Error geocoding:', e);
+                            scanAddress = 'No disponible';
+                        }
+                        resolve(scanLocation);
+                    },
+                    (error) => {
+                        console.error('Error geolocalización:', error);
+                        alert('Activa GPS para ubicación exacta');
+                        resolve(null);
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+                );
+            });
+        }
+
+        function initMap() {
+            if (!scanLocation) return;
+            
+            const mapContainer = document.getElementById('location-map');
+            map = L.map(mapContainer).setView([scanLocation.lat, scanLocation.lng], 18);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            L.marker([scanLocation.lat, scanLocation.lng])
+                .addTo(map)
+                .bindPopup(`🚨 INCIDENTE AQUÍ<br>${scanAddress}`)
+                .openPopup();
+        }
+
+        function generateEmergencyMessage() {
+            const nombre = PERSONA.nombre;
+            const datosCriticos = `Sangre: ${PERSONA.tipoSangre} | Alergias: ${PERSONA.alergias} | Condiciones: ${PERSONA.condiciones}`;
+            const primerContacto = PERSONA.contactos[0];
+            
+            return `🚨 EMERGENCIA MÉDICA 🚨
+
+VICTIMA: ${nombre}
+${datosCriticos}
+
+📍 UBICACIÓN INCIDENTE:
+${scanAddress || 'GPS activo'}
+Lat: ${scanLocation?.lat?.toFixed(6) || 'N/A'}
+Lng: ${scanLocation?.lng?.toFixed(6) || 'N/A'}
+
+⏰ Escaneado: ${new Date().toLocaleString('es-MX')}
+CONTACTO PRINCIPAL: ${primerContacto.nombre} ${primerContacto.telefono}
+
+¡ATENCIÓN INMEDIATA REQUERIDA!`;
+        }
+
+        function sendWhatsApp() {
+            const primerContacto = PERSONA.contactos[0];
+            const mensaje = generateEmergencyMessage();
+            const whatsappUrl = `https://wa.me/${primerContacto.telefono.replace(/\D/g,'')}?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function copyMessage() {
+            navigator.clipboard.writeText(generateEmergencyMessage()).then(() => {
+                alert('¡Mensaje copiado! Pégalo en WhatsApp/SMS');
+            });
+        }
+
+        function copyAllData() {
+            const allData = `
+${generateEmergencyMessage()}
+
+=== DATOS COMPLETOS ===
+${JSON.stringify(PERSONA, null, 2)}
+            `;
+            navigator.clipboard.writeText(allData).then(() => {
+                alert('¡TODOS los datos copiados!');
+            });
+        }
+    </script>
+</body>
+</html> 
     .pulse-ring {
       width: 80px; height: 80px;
       border-radius: 50%;
