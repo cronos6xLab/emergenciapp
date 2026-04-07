@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="ID de Emergencia Vial — Sistema de respuesta rapida para accidentes de transito" />
-  <title>ID de Emergencia Vial</title>
+  <title>ID de Emergencia Vial<titlee>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     body {
       background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
       min-height: 100vh;
@@ -16,25 +16,25 @@
       color: #F1F5F9;
       padding: 12px 0 40px;
     }
-
+ 
     .container {
       max-width: 520px;
       margin: 0 auto;
       padding: 0 14px;
     }
-
+ 
     /* ---------- HEADER ---------- */
     .header {
       text-align: center;
       padding: 32px 0 24px;
     }
-
+ 
     @keyframes pulse {
       0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.55); }
       70%  { box-shadow: 0 0 0 22px rgba(220,38,38,0); }
       100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
     }
-
+ 
     .pulse-ring {
       width: 80px; height: 80px;
       border-radius: 50%;
@@ -43,11 +43,11 @@
       margin: 0 auto 16px;
       animation: pulse 2s infinite;
     }
-
+ 
     .cross-icon { font-size: 38px; color: #fff; font-weight: 900; line-height: 1; }
     .header-title { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 6px; letter-spacing: -0.5px; }
     .header-subtitle { font-size: 13px; color: #94A3B8; }
-
+ 
     /* ---------- CARDS ---------- */
     .scan-card {
       background: #1e3a2f;
@@ -58,7 +58,7 @@
     }
     .scan-card-title { font-size: 13px; font-weight: 700; color: #4ade80; margin-bottom: 6px; }
     .scan-text { font-size: 12px; color: #86efac; margin: 2px 0; }
-
+ 
     /* ---------- EMERGENCY BTN ---------- */
     .emergency-btn {
       width: 100%;
@@ -78,14 +78,14 @@
     .emergency-btn-icon { font-size: 40px; }
     .emergency-btn-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
     .emergency-btn-sub { font-size: 13px; opacity: 0.85; }
-
+ 
     /* ---------- MAP BTN ---------- */
     .map-btn {
       background: #1D4ED8; color: #fff; border: none;
       border-radius: 8px; padding: 8px 14px;
       font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 8px;
     }
-
+ 
     /* ---------- INSTRUCTIONS ---------- */
     .instruct-card {
       background: #1e293b; border: 1px solid #334155;
@@ -107,7 +107,7 @@
     .step-warn { background: #FEF3C7; border-radius: 8px; padding: 10px 12px; margin-top: 4px; }
     .step-warn .step-num { background: #D97706; }
     .step-warn div { font-size: 13px; color: #78350F; }
-
+ 
     /* ---------- BUTTONS ---------- */
     .emer-btn {
       width: 100%; background: #1e293b; color: #60A5FA;
@@ -115,11 +115,11 @@
       padding: 14px 16px; font-size: 14px; font-weight: 700;
       cursor: pointer; margin-bottom: 12px;
     }
-
+ 
     /* ---------- FOOTER ---------- */
     .footer { text-align: center; margin-top: 32px; }
     .footer-text { font-size: 11px; color: #475569; }
-
+ 
     /* ---------- TOP BAR ---------- */
     .top-bar {
       display: flex; align-items: center; justify-content: space-between;
@@ -137,7 +137,7 @@
       background: #1D4ED8; color: #fff; border-radius: 20px;
       padding: 6px 14px; font-size: 12px; font-weight: 800;
     }
-
+ 
     /* ---------- PERSON HEADER ---------- */
     .person-header {
       background: #1e293b; border: 1px solid #334155; border-radius: 16px;
@@ -150,7 +150,7 @@
     }
     .person-name { font-size: 20px; font-weight: 900; color: #F1F5F9; margin-bottom: 4px; }
     .person-meta { font-size: 12px; color: #94A3B8; margin: 1px 0; }
-
+ 
     /* ---------- BLOOD CARD ---------- */
     .blood-card {
       background: linear-gradient(135deg, #7f1d1d, #991b1b);
@@ -164,7 +164,7 @@
       background: #F59E0B; color: #fff; border-radius: 8px;
       padding: 6px 10px; font-size: 11px; font-weight: 800; margin-left: auto;
     }
-
+ 
     /* ---------- ALERT CARD ---------- */
     .alert-card {
       background: #431407; border: 2px solid #EA580C;
@@ -179,7 +179,7 @@
       background: #DC2626; color: #fff; border-radius: 20px;
       padding: 4px 12px; font-size: 12px; font-weight: 700;
     }
-
+ 
     /* ---------- INFO CARD ---------- */
     .info-card {
       background: #1e293b; border: 1px solid #334155;
@@ -192,7 +192,7 @@
       margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .list-item { font-size: 14px; color: #CBD5E1; margin-bottom: 4px; }
-
+ 
     /* ---------- DONOR CARD ---------- */
     .donor-card {
       background: #1a1a2e; border: 2px solid #ec4899;
@@ -200,14 +200,14 @@
       display: flex; align-items: center; gap: 10px;
       color: #f9a8d4; font-weight: 700; font-size: 14px;
     }
-
+ 
     /* ---------- SECTION TITLE ---------- */
     .section-title {
       font-size: 15px; font-weight: 800; color: #E2E8F0;
       margin-bottom: 10px; margin-top: 6px;
       border-bottom: 2px solid #334155; padding-bottom: 8px;
     }
-
+ 
     /* ---------- CONTACT CARD ---------- */
     .contact-card {
       background: #1e293b; border: 1px solid #334155;
@@ -240,7 +240,7 @@
       flex: 1; background: #0369A1; color: #fff; border: none;
       border-radius: 8px; padding: 10px 8px; font-size: 13px; font-weight: 700; cursor: pointer;
     }
-
+ 
     /* ---------- MSG CARD ---------- */
     .msg-card {
       background: #0f172a; border: 1px solid #1E40AF;
@@ -256,7 +256,7 @@
       border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer;
     }
     .copy-btn.copied { background: #16A34A; }
-
+ 
     /* ---------- SOS 911 ---------- */
     .sos-911 {
       width: 100%; background: linear-gradient(135deg, #DC2626, #B91C1C);
@@ -265,7 +265,7 @@
       cursor: pointer; margin-bottom: 12px; letter-spacing: -0.5px;
       box-shadow: 0 6px 24px rgba(220,38,38,0.4);
     }
-
+ 
     /* ---------- EMERGENCIAS ---------- */
     .emerg-num-card {
       width: 100%; background: #1e293b; border: 1px solid #334155;
@@ -277,17 +277,17 @@
     .emerg-num-name { font-weight: 700; font-size: 14px; color: #F1F5F9; }
     .emerg-num-val { font-size: 13px; font-weight: 800; }
     .call-tag { color: #fff; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 800; }
-
+ 
     /* ---------- VIEWS ---------- */
     .view { display: none; }
     .view.active { display: block; }
-
+ 
     /* ---------- HIDDEN ---------- */
     .hidden { display: none !important; }
-  </style>
-</head>
+  <stylee>
+<headd>
 <body>
-
+ 
 <!-- ============================================================
      ▼▼▼  DATOS DE LA PERSONA — EDITA AQUI  ▼▼▼
      ============================================================ -->
@@ -300,7 +300,7 @@ const PERSONA = {
   sexo:            "Masculino",                // ← Masculino / Femenino / Otro
   curp:            "MALJ900514HDFRRN09",       // ← CURP (dejar vacío si no aplica)
   nss:             "12345678901",              // ← Número Seguridad Social IMSS
-
+ 
   // ── DATOS MÉDICOS CRÍTICOS ────────────────────────────────
   tipoSangre:         "O+",                    // ← A+, A-, B+, B-, AB+, AB-, O+, O-
   alergias:           ["Penicilina","Aspirina","Polen"], // ← [] si ninguna
@@ -310,19 +310,19 @@ const PERSONA = {
   marcapaso:          false,                   // ← true / false
   donadorOrganos:     true,                    // ← true / false
   notasMedicas:       "Paciente con intolerancia a AINEs. NO administrar ibuprofeno ni naproxeno.",
-
+ 
   // ── SEGURO MÉDICO ─────────────────────────────────────────
   seguroMedico:     "IMSS",                    // ← IMSS / ISSSTE / Seguro Popular / Privado / Ninguno
   numeroPoliza:     "123456789",               // ← Número póliza o afiliación
   hospitalAsignado: "Hospital General Dr. Enrique Cabrera, CDMX",
-
+ 
   // ── VEHÍCULO ──────────────────────────────────────────────
   tipoVehiculo:  "Motocicleta",                // ← Moto / Bicicleta eléctrica / Scooter / Auto / etc.
   marcaVehiculo: "Honda",
   modeloVehiculo:"CB500F",
   colorVehiculo: "Rojo",
   placas:        "ABC-1234",
-
+ 
   // ── CONTACTOS DE EMERGENCIA ───────────────────────────────
   // Orden: más importante primero. Agrega o quita objetos {}
   contactos: [
@@ -348,7 +348,7 @@ const PERSONA = {
       email:    "ana.martinez@email.com",
     },
   ],
-
+ 
   // ── DIRECCIÓN DE CASA ─────────────────────────────────────
   domicilio: {
     calle:       "Calle Morelos",
@@ -360,222 +360,222 @@ const PERSONA = {
     referencias: "Entre Insurgentes y Eje 3 Sur, casa color beige",
   },
 };
-</script>
+<scriptt>
 <!-- ============================================================
      ▲▲▲  FIN DE DATOS — NO MODIFIQUES MÁS ABAJO  ▲▲▲
      ============================================================ -->
-
+ 
 <div class="container">
-
+ 
   <!-- ════════ VISTA: INICIO ════════ -->
   <div id="view-inicio" class="view active">
-
+ 
     <div class="header">
-      <div class="pulse-ring"><span class="cross-icon">✚</span></div>
-      <h1 class="header-title">ID de Emergencia</h1>
-      <p class="header-subtitle">Sistema de Respuesta Rápida para Accidentes</p>
-    </div>
-
+      <div class="pulse-ring"><span class="cross-icon">✚<spann><divv>
+      <h1 class="header-title">ID de Emergencia<h11>
+      <p class="header-subtitle">Sistema de Respuesta Rápida para Accidentes<pp>
+    <divv>
+ 
     <div id="scan-card-inicio" class="scan-card" style="display:none">
-      <div class="scan-card-title">&#128225; Escaneo registrado automáticamente</div>
-      <p class="scan-text" id="scan-hora-inicio"></p>
-      <p class="scan-text" id="scan-dir-inicio"></p>
+      <div class="scan-card-title">&#128225; Escaneo registrado automáticamente<divv>
+      <p class="scan-text" id="scan-hora-inicio"><pp>
+      <p class="scan-text" id="scan-dir-inicio"><pp>
       <button class="map-btn" id="map-btn-inicio" style="display:none" onclick="abrirMapa()">
         &#128506; Ver ubicación en Google Maps
-      </button>
-    </div>
-
+      <buttonn>
+    <divv>
+ 
     <button class="emergency-btn" onclick="irA('datos')">
-      <span class="emergency-btn-icon">&#128680;</span>
-      <span class="emergency-btn-text">¡ESTO ES UNA EMERGENCIA!</span>
-      <span class="emergency-btn-sub">Presiona para ver datos de la persona</span>
-    </button>
-
+      <span class="emergency-btn-icon">&#128680;<spann>
+      <span class="emergency-btn-text">¡ESTO ES UNA EMERGENCIA!<spann>
+      <span class="emergency-btn-sub">Presiona para ver datos de la persona<spann>
+    <buttonn>
+ 
     <div class="instruct-card">
       <button class="instruct-toggle" onclick="toggleInstrucciones()">
         &#9660; ¿Qué hacer si encontraste este código QR?
-      </button>
+      <buttonn>
       <div id="instrucciones" class="instruct-body" style="display:none">
         <div class="step">
-          <div class="step-num">1</div>
-          <div>Llama al <strong>911</strong> de inmediato si hay heridos graves.</div>
-        </div>
+          <div class="step-num">1<divv>
+          <div>Llama al <strong>911<strongg> de inmediato si hay heridos graves.<divv>
+        <divv>
         <div class="step">
-          <div class="step-num">2</div>
-          <div>Presiona el botón rojo <strong>"¡ESTO ES UNA EMERGENCIA!"</strong> para ver los datos médicos de la persona.</div>
-        </div>
+          <div class="step-num">2<divv>
+          <div>Presiona el botón rojo <strong>"¡ESTO ES UNA EMERGENCIA!"<strongg> para ver los datos médicos de la persona.<divv>
+        <divv>
         <div class="step">
-          <div class="step-num">3</div>
-          <div>Comparte la información con los <strong>paramédicos o servicios de emergencia</strong>.</div>
-        </div>
+          <div class="step-num">3<divv>
+          <div>Comparte la información con los <strong>paramédicos o servicios de emergencia<strongg>.<divv>
+        <divv>
         <div class="step">
-          <div class="step-num">4</div>
-          <div>Usa los botones de <strong>WhatsApp, SMS o llamada</strong> para avisar a los familiares.</div>
-        </div>
+          <div class="step-num">4<divv>
+          <div>Usa los botones de <strong>WhatsApp, SMS o llamada<strongg> para avisar a los familiares.<divv>
+        <divv>
         <div class="step">
-          <div class="step-num">5</div>
-          <div>La <strong>ubicación exacta</strong> ya fue registrada automáticamente al escanear.</div>
-        </div>
+          <div class="step-num">5<divv>
+          <div>La <strong>ubicación exacta<strongg> ya fue registrada automáticamente al escanear.<divv>
+        <divv>
         <div class="step step-warn">
-          <div class="step-num" style="background:#D97706">!</div>
-          <div>NO muevas a la persona si sospechas lesión de columna. Espera a los paramédicos.</div>
-        </div>
-      </div>
-    </div>
-
-    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Números de Emergencia México / CDMX</button>
-
+          <div class="step-num" style="background:#D97706">!<divv>
+          <div>NO muevas a la persona si sospechas lesión de columna. Espera a los paramédicos.<divv>
+        <divv>
+      <divv>
+    <divv>
+ 
+    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Números de Emergencia México / CDMX<buttonn>
+ 
     <div class="footer">
-      <p class="footer-text">Sistema de Identificación de Emergencias Viales</p>
+      <p class="footer-text">Sistema de Identificación de Emergencias Viales<pp>
       <p class="footer-text" style="opacity:0.5;font-size:10px;margin-top:4px">
         Este código QR contiene datos médicos privados. Úselo solo en caso de emergencia.
-      </p>
-    </div>
-  </div><!-- /view-inicio -->
-
-
+      <pp>
+    <divv>
+  <divv><!-- /view-inicio -->
+ 
+ 
   <!-- ════════ VISTA: DATOS ════════ -->
   <div id="view-datos" class="view">
-
+ 
     <div class="top-bar">
-      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver</button>
-      <div class="top-bar-badge">&#128680; MODO EMERGENCIA</div>
-    </div>
-
+      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver<buttonn>
+      <div class="top-bar-badge">&#128680; MODO EMERGENCIA<divv>
+    <divv>
+ 
     <!-- Nombre -->
     <div class="person-header">
-      <div class="person-avatar" id="person-initials"></div>
+      <div class="person-avatar" id="person-initials"><divv>
       <div>
-        <div class="person-name" id="person-fullname"></div>
-        <div class="person-meta" id="person-age-sex"></div>
-        <div class="person-meta" id="person-vehicle"></div>
-      </div>
-    </div>
-
+        <div class="person-name" id="person-fullname"><divv>
+        <div class="person-meta" id="person-age-sex"><divv>
+        <div class="person-meta" id="person-vehicle"><divv>
+      <divv>
+    <divv>
+ 
     <!-- Tipo de sangre -->
     <div class="blood-card">
-      <div class="blood-icon">&#129754;</div>
+      <div class="blood-icon">&#129754;<divv>
       <div>
-        <div class="blood-label">TIPO DE SANGRE</div>
-        <div class="blood-value" id="blood-type"></div>
-      </div>
-      <div class="marcapaso-badge" id="marcapaso-badge" style="display:none">&#9889; MARCAPASO</div>
-    </div>
-
+        <div class="blood-label">TIPO DE SANGRE<divv>
+        <div class="blood-value" id="blood-type"><divv>
+      <divv>
+      <div class="marcapaso-badge" id="marcapaso-badge" style="display:none">&#9889; MARCAPASO<divv>
+    <divv>
+ 
     <!-- Alergias -->
     <div class="alert-card" id="alergias-card" style="display:none">
-      <div class="alert-title">&#9888;&#65039; ALERGIAS — NO ADMINISTRAR</div>
-      <div class="tag-row" id="alergias-tags"></div>
-    </div>
-
+      <div class="alert-title">&#9888;&#65039; ALERGIAS — NO ADMINISTRAR<divv>
+      <div class="tag-row" id="alergias-tags"><divv>
+    <divv>
+ 
     <!-- Condiciones -->
     <div class="info-card" id="condiciones-card" style="display:none">
-      <div class="card-title">&#127973; Condiciones Médicas</div>
-      <div id="condiciones-list"></div>
-    </div>
-
+      <div class="card-title">&#127973; Condiciones Médicas<divv>
+      <div id="condiciones-list"><divv>
+    <divv>
+ 
     <!-- Medicamentos -->
     <div class="info-card" id="medicamentos-card" style="display:none">
-      <div class="card-title">&#128138; Medicamentos Actuales</div>
-      <div id="medicamentos-list"></div>
-    </div>
-
+      <div class="card-title">&#128138; Medicamentos Actuales<divv>
+      <div id="medicamentos-list"><divv>
+    <divv>
+ 
     <!-- Notas médicas -->
     <div class="info-card info-card-yellow" id="notas-card" style="display:none">
-      <div class="card-title">&#128203; Notas Importantes</div>
-      <p id="notas-text" style="font-size:14px;color:#CBD5E1;margin:0;line-height:1.5"></p>
-    </div>
-
+      <div class="card-title">&#128203; Notas Importantes<divv>
+      <p id="notas-text" style="font-size:14px;color:#CBD5E1;margin:0;line-height:1.5"><pp>
+    <divv>
+ 
     <!-- Donador -->
     <div class="donor-card" id="donor-card" style="display:none">
-      <span style="font-size:22px">&#10084;&#65039;</span>
-      <span>DONADOR DE ÓRGANOS</span>
-    </div>
-
+      <span style="font-size:22px">&#10084;&#65039;<spann>
+      <span>DONADOR DE ÓRGANOS<spann>
+    <divv>
+ 
     <!-- Seguro -->
     <div class="info-card">
-      <div class="card-title">&#127970; Seguro / Derechohabiencia</div>
-      <div class="list-item" id="seg-institucion"></div>
-      <div class="list-item" id="seg-poliza" style="display:none"></div>
-      <div class="list-item" id="seg-hospital" style="display:none"></div>
-      <div class="list-item" id="seg-nss" style="display:none"></div>
-      <div class="list-item" id="seg-curp" style="display:none"></div>
-    </div>
-
+      <div class="card-title">&#127970; Seguro / Derechohabiencia<divv>
+      <div class="list-item" id="seg-institucion"><divv>
+      <div class="list-item" id="seg-poliza" style="display:none"><divv>
+      <div class="list-item" id="seg-hospital" style="display:none"><divv>
+      <div class="list-item" id="seg-nss" style="display:none"><divv>
+      <div class="list-item" id="seg-curp" style="display:none"><divv>
+    <divv>
+ 
     <!-- Ubicación -->
     <div class="info-card info-card-blue">
-      <div class="card-title">&#128205; Ubicación del Accidente</div>
-      <p id="ubicacion-texto" style="font-size:13px;color:#CBD5E1;margin:4px 0;line-height:1.5">Obteniendo ubicación GPS...</p>
-      <p id="ubicacion-coords" style="font-size:12px;color:#6B7280;margin:2px 0"></p>
+      <div class="card-title">&#128205; Ubicación del Accidente<divv>
+      <p id="ubicacion-texto" style="font-size:13px;color:#CBD5E1;margin:4px 0;line-height:1.5">Obteniendo ubicación GPS...<pp>
+      <p id="ubicacion-coords" style="font-size:12px;color:#6B7280;margin:2px 0"><pp>
       <button class="map-btn" id="map-btn-datos" style="display:none" onclick="abrirMapa()">
         &#128506; Abrir en Google Maps
-      </button>
-    </div>
-
+      <buttonn>
+    <divv>
+ 
     <!-- Domicilio -->
     <div class="info-card">
-      <div class="card-title">&#127968; Domicilio de la Persona</div>
-      <p id="dom-calle" style="font-size:14px;color:#CBD5E1;margin:4px 0"></p>
-      <p id="dom-ciudad" style="font-size:13px;color:#6B7280;margin:2px 0"></p>
-      <p id="dom-ref" style="font-size:12px;color:#94A3B8;margin:4px 0"></p>
-    </div>
-
+      <div class="card-title">&#127968; Domicilio de la Persona<divv>
+      <p id="dom-calle" style="font-size:14px;color:#CBD5E1;margin:4px 0"><pp>
+      <p id="dom-ciudad" style="font-size:13px;color:#6B7280;margin:2px 0"><pp>
+      <p id="dom-ref" style="font-size:12px;color:#94A3B8;margin:4px 0"><pp>
+    <divv>
+ 
     <!-- Contactos -->
-    <div class="section-title">&#128101; Contactos de Emergencia</div>
-    <div id="contactos-container"></div>
-
+    <div class="section-title">&#128101; Contactos de Emergencia<divv>
+    <div id="contactos-container"><divv>
+ 
     <!-- Mensaje automático -->
-    <div class="section-title">&#128228; Mensaje Automático de Emergencia</div>
+    <div class="section-title">&#128228; Mensaje Automático de Emergencia<divv>
     <div class="msg-card">
-      <pre class="msg-pre" id="msg-auto"></pre>
-      <button class="copy-btn" id="copy-btn" onclick="copiarMensaje()">&#128203; Copiar mensaje completo</button>
-    </div>
-
+      <pre class="msg-pre" id="msg-auto"><pree>
+      <button class="copy-btn" id="copy-btn" onclick="copiarMensaje()">&#128203; Copiar mensaje completo<buttonn>
+    <divv>
+ 
     <!-- 911 -->
-    <button class="sos-911" onclick="llamar('911')">&#128680; LLAMAR AL 911 — EMERGENCIAS</button>
-    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Ver todos los números de emergencia</button>
-
+    <button class="sos-911" onclick="llamar('911')">&#128680; LLAMAR AL 911 — EMERGENCIAS<buttonn>
+    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Ver todos los números de emergencia<buttonn>
+ 
     <!-- Registro escaneo -->
     <div class="scan-card" id="scan-card-datos" style="display:none;margin-top:16px;font-size:12px">
-      <div class="scan-card-title">&#128225; Registro del escaneo</div>
-      <p class="scan-text" id="scan-hora-datos"></p>
-      <p class="scan-text" id="scan-dir-datos"></p>
-      <p class="scan-text" id="scan-coords-datos" style="opacity:0.6"></p>
-    </div>
-
+      <div class="scan-card-title">&#128225; Registro del escaneo<divv>
+      <p class="scan-text" id="scan-hora-datos"><pp>
+      <p class="scan-text" id="scan-dir-datos"><pp>
+      <p class="scan-text" id="scan-coords-datos" style="opacity:0.6"><pp>
+    <divv>
+ 
     <div class="footer" style="margin-top:24px">
-      <p class="footer-text">ID de Emergencia Vial · Datos guardados localmente</p>
-    </div>
-  </div><!-- /view-datos -->
-
-
+      <p class="footer-text">ID de Emergencia Vial · Datos guardados localmente<pp>
+    <divv>
+  <divv><!-- /view-datos -->
+ 
+ 
   <!-- ════════ VISTA: EMERGENCIAS ════════ -->
   <div id="view-emergencias" class="view">
-
+ 
     <div class="top-bar">
-      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver</button>
-      <div class="top-bar-badge-blue">&#128222; EMERGENCIAS</div>
-    </div>
-
+      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver<buttonn>
+      <div class="top-bar-badge-blue">&#128222; EMERGENCIAS<divv>
+    <divv>
+ 
     <h2 style="font-size:20px;font-weight:800;text-align:center;margin-bottom:4px">
       Números de Emergencia
-    </h2>
-    <p style="font-size:13px;color:#6B7280;text-align:center;margin-bottom:20px">México · CDMX · 2026</p>
-
-    <div id="emergencias-container"></div>
-
+    <h22>
+    <p style="font-size:13px;color:#6B7280;text-align:center;margin-bottom:20px">México · CDMX · 2026<pp>
+ 
+    <div id="emergencias-container"><divv>
+ 
     <div class="footer" style="margin-top:24px">
-      <p class="footer-text">Toca cualquier número para llamar directamente</p>
-    </div>
-  </div><!-- /view-emergencias -->
-
-</div><!-- /container -->
-
+      <p class="footer-text">Toca cualquier número para llamar directamente<pp>
+    <divv>
+  <divv><!-- /view-emergencias -->
+ 
+<divv><!-- /container -->
+ 
 <script>
 /* ── Estado global ── */
 let ubicacionActual = null;
 let scanLog = null;
-
+ 
 const EMERGENCIAS_MX = [
   { nombre: "Emergencias (Único Nacional)", numero: "911",          color: "#DC2626" },
   { nombre: "Cruz Roja Mexicana",           numero: "065",          color: "#DC2626" },
@@ -590,7 +590,7 @@ const EMERGENCIAS_MX = [
   { nombre: "DIF Nacional",                 numero: "8000040800",   color: "#D97706" },
   { nombre: "Toxicología / Intoxicaciones", numero: "5556889145",   color: "#DC2626" },
 ];
-
+ 
 /* ── Navegación ── */
 function irA(vista) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -599,7 +599,7 @@ function irA(vista) {
   if (vista === 'datos') renderDatos();
   if (vista === 'emergencias') renderEmergencias();
 }
-
+ 
 /* ── Calcular edad ── */
 function calcularEdad(fechaNac) {
   const hoy = new Date();
@@ -609,7 +609,7 @@ function calcularEdad(fechaNac) {
   if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--;
   return edad;
 }
-
+ 
 /* ── Generador de mensaje ── */
 function generarMensaje() {
   const dir = ubicacionActual ? ubicacionActual.direccion : 'Ubicación no disponible';
@@ -620,7 +620,7 @@ function generarMensaje() {
   const contactosStr = PERSONA.contactos
     .map((c, i) => (i + 1) + '. ' + c.nombre + ' (' + c.relacion + '): ' + c.telefono)
     .join('\n');
-
+ 
   return (
     '🚨 EMERGENCIA - ACCIDENTE DE TRÁNSITO 🚨\n\n' +
     'Se reporta que ' + PERSONA.nombre + ' ' + PERSONA.apellidos + ' ha tenido un ACCIDENTE.\n\n' +
@@ -636,32 +636,32 @@ function generarMensaje() {
     '⚠️ Por favor comuníquese de inmediato. Esta es una emergencia real.'
   );
 }
-
+ 
 /* ── Acciones ── */
 function llamar(num) { window.location.href = 'tel:' + num; }
-
+ 
 function abrirWhatsApp(tel) {
   const msg = encodeURIComponent(generarMensaje());
   window.open('https://wa.me/52' + tel + '?text=' + msg, '_blank');
 }
-
+ 
 function enviarSMS(tel) {
   const msg = encodeURIComponent(generarMensaje());
   window.open('sms:' + tel + '?body=' + msg, '_blank');
 }
-
+ 
 function enviarEmail(email) {
   const asunto = encodeURIComponent('🚨 EMERGENCIA - ' + PERSONA.nombre + ' ' + PERSONA.apellidos);
   const msg = encodeURIComponent(generarMensaje());
   window.open('mailto:' + email + '?subject=' + asunto + '&body=' + msg, '_blank');
 }
-
+ 
 function abrirMapa() {
   if (ubicacionActual) {
     window.open('https://maps.google.com/?q=' + ubicacionActual.lat + ',' + ubicacionActual.lng, '_blank');
   }
 }
-
+ 
 function copiarMensaje() {
   const btn = document.getElementById('copy-btn');
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -684,7 +684,7 @@ function copiarMensaje() {
     setTimeout(function() { btn.textContent = '📋 Copiar mensaje completo'; }, 2500);
   }
 }
-
+ 
 function toggleInstrucciones() {
   const el = document.getElementById('instrucciones');
   const btn = el.previousElementSibling;
@@ -696,11 +696,11 @@ function toggleInstrucciones() {
     btn.textContent = '▼ ¿Qué hacer si encontraste este código QR?';
   }
 }
-
+ 
 /* ── Render DATOS ── */
 function renderDatos() {
   const edad = PERSONA.fechaNacimiento ? calcularEdad(PERSONA.fechaNacimiento) : '?';
-
+ 
   // Persona
   document.getElementById('person-initials').textContent =
     PERSONA.nombre.charAt(0) + PERSONA.apellidos.charAt(0);
@@ -713,11 +713,11 @@ function renderDatos() {
       '🏍️ ' + PERSONA.tipoVehiculo + ' ' + PERSONA.marcaVehiculo + ' ' +
       PERSONA.modeloVehiculo + ' — Placas: ' + PERSONA.placas;
   }
-
+ 
   // Sangre
   document.getElementById('blood-type').textContent = PERSONA.tipoSangre;
   if (PERSONA.marcapaso) document.getElementById('marcapaso-badge').style.display = 'block';
-
+ 
   // Alergias
   if (PERSONA.alergias.length > 0) {
     const card = document.getElementById('alergias-card');
@@ -727,7 +727,7 @@ function renderDatos() {
       return '<span class="tag-alert">' + a + '</span>';
     }).join('');
   }
-
+ 
   // Condiciones
   if (PERSONA.condicionesMedicas.length > 0) {
     document.getElementById('condiciones-card').style.display = 'block';
@@ -736,7 +736,7 @@ function renderDatos() {
         return '<div class="list-item">• ' + c + '</div>';
       }).join('');
   }
-
+ 
   // Medicamentos
   if (PERSONA.medicamentos.length > 0) {
     document.getElementById('medicamentos-card').style.display = 'block';
@@ -745,16 +745,16 @@ function renderDatos() {
         return '<div class="list-item">• ' + m + '</div>';
       }).join('');
   }
-
+ 
   // Notas
   if (PERSONA.notasMedicas) {
     document.getElementById('notas-card').style.display = 'block';
     document.getElementById('notas-text').textContent = PERSONA.notasMedicas;
   }
-
+ 
   // Donador
   if (PERSONA.donadorOrganos) document.getElementById('donor-card').style.display = 'flex';
-
+ 
   // Seguro
   document.getElementById('seg-institucion').innerHTML = '<strong>Institución:</strong> ' + PERSONA.seguroMedico;
   if (PERSONA.numeroPoliza) {
@@ -773,7 +773,7 @@ function renderDatos() {
     document.getElementById('seg-curp').style.display = 'block';
     document.getElementById('seg-curp').innerHTML = '<strong>CURP:</strong> ' + PERSONA.curp;
   }
-
+ 
   // Domicilio
   document.getElementById('dom-calle').textContent =
     PERSONA.domicilio.calle + ' #' + PERSONA.domicilio.numero + ', Col. ' + PERSONA.domicilio.colonia;
@@ -782,7 +782,7 @@ function renderDatos() {
   if (PERSONA.domicilio.referencias) {
     document.getElementById('dom-ref').textContent = 'Ref: ' + PERSONA.domicilio.referencias;
   }
-
+ 
   // Ubicación actual
   if (ubicacionActual) {
     document.getElementById('ubicacion-texto').textContent = ubicacionActual.direccion;
@@ -792,7 +792,7 @@ function renderDatos() {
   } else {
     document.getElementById('ubicacion-texto').textContent = 'Ubicación no disponible o no autorizada.';
   }
-
+ 
   // Scan log datos
   if (scanLog) {
     const sc = document.getElementById('scan-card-datos');
@@ -801,7 +801,7 @@ function renderDatos() {
     document.getElementById('scan-dir-datos').textContent = '📍 ' + scanLog.direccion;
     document.getElementById('scan-coords-datos').textContent = 'Coordenadas: ' + scanLog.coords;
   }
-
+ 
   // Contactos
   const cont = document.getElementById('contactos-container');
   cont.innerHTML = '';
@@ -832,11 +832,11 @@ function renderDatos() {
         '</div>' +
       '</div>';
   });
-
+ 
   // Mensaje auto
   document.getElementById('msg-auto').textContent = generarMensaje();
 }
-
+ 
 /* ── Render EMERGENCIAS ── */
 function renderEmergencias() {
   const cont = document.getElementById('emergencias-container');
@@ -855,7 +855,7 @@ function renderEmergencias() {
     );
   }).join('');
 }
-
+ 
 /* ── Registro automático de escaneo + geolocalización ── */
 (function registrarEscaneo() {
   const hora = new Date().toLocaleString('es-MX', {
@@ -863,65 +863,154 @@ function renderEmergencias() {
     dateStyle: 'full',
     timeStyle: 'medium',
   });
-
-  function mostrarScanInicio(log) {
+ 
+  function actualizarUI(log) {
     const card = document.getElementById('scan-card-inicio');
     card.style.display = 'block';
-    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + log.hora;
-    document.getElementById('scan-dir-inicio').textContent = '📍 ' + log.direccion;
+    document.getElementById('scan-hora-inicio').textContent = '\u{1F550} ' + log.hora;
+    document.getElementById('scan-dir-inicio').textContent = '\u{1F4CD} ' + log.direccion;
     if (ubicacionActual) {
       document.getElementById('map-btn-inicio').style.display = 'inline-block';
     }
+    // Actualizar tambien la vista de datos si ya esta abierta
+    const ubTexto = document.getElementById('ubicacion-texto');
+    const ubCoords = document.getElementById('ubicacion-coords');
+    const mapBtnDatos = document.getElementById('map-btn-datos');
+    if (ubTexto) {
+      ubTexto.textContent = log.direccion;
+      if (ubicacionActual) {
+        ubCoords.textContent = 'Coordenadas: ' + ubicacionActual.lat.toFixed(6) + ', ' + ubicacionActual.lng.toFixed(6);
+        mapBtnDatos.style.display = 'inline-block';
+      }
+    }
+    // Actualizar mensaje automatico si ya se renderizo
+    const msgEl = document.getElementById('msg-auto');
+    if (msgEl && msgEl.textContent.length > 10) {
+      msgEl.textContent = generarMensaje();
+    }
   }
-
+ 
+  // Mostrar la tarjeta de inmediato con la hora
+  const card = document.getElementById('scan-card-inicio');
+  card.style.display = 'block';
+  document.getElementById('scan-hora-inicio').textContent = '\u{1F550} ' + hora;
+  document.getElementById('scan-dir-inicio').textContent = '\u{1F4CD} Obteniendo ubicacion GPS...';
+ 
+  // Fallback con coordenadas cuando la geocodificacion falla
+  function usarCoordsDirectas(lat, lng) {
+    const mapsUrl = 'https://maps.google.com/?q=' + lat + ',' + lng;
+    const direccion = 'Lat: ' + lat.toFixed(6) + ', Lng: ' + lng.toFixed(6) +
+                      ' — Ver mapa: ' + mapsUrl;
+    ubicacionActual = { lat: lat, lng: lng, direccion: direccion };
+    scanLog = { hora: hora, coords: lat.toFixed(6) + ', ' + lng.toFixed(6), direccion: direccion };
+    guardarLog(lat, lng, direccion);
+    actualizarUI(scanLog);
+  }
+ 
+  function guardarLog(lat, lng, direccion) {
+    try {
+      const logs = JSON.parse(localStorage.getItem('emergencia_scans') || '[]');
+      logs.push({ hora: hora, lat: lat, lng: lng, direccion: direccion });
+      localStorage.setItem('emergencia_scans', JSON.stringify(logs.slice(-50)));
+    } catch(e) {}
+  }
+ 
+  // Geocodificacion inversa usando BigDataCloud (sin CORS, gratis, sin API key)
+  function geocodificarBigDataCloud(lat, lng) {
+    return fetch(
+      'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat +
+      '&longitude=' + lng + '&localityLanguage=es'
+    )
+    .then(function(r) {
+      if (!r.ok) throw new Error('BDC error');
+      return r.json();
+    })
+    .then(function(data) {
+      // Construir direccion legible con los campos disponibles
+      var partes = [];
+      if (data.street)                  partes.push(data.street);
+      if (data.streetNumber && data.streetNumber !== '0') partes.push('#' + data.streetNumber);
+      if (data.locality)                partes.push(data.locality);
+      if (data.localityInfo && data.localityInfo.administrative) {
+        var admins = data.localityInfo.administrative;
+        admins.forEach(function(a) {
+          if (a.order === 3 || a.order === 4) partes.push(a.name);
+        });
+      }
+      if (data.city)                    partes.push(data.city);
+      if (data.principalSubdivision)    partes.push(data.principalSubdivision);
+      if (data.countryName)             partes.push(data.countryName);
+ 
+      var direccion = partes.length > 1
+        ? partes.join(', ')
+        : (data.display_name || (lat.toFixed(6) + ', ' + lng.toFixed(6)));
+ 
+      return direccion;
+    });
+  }
+ 
+  // Segunda opcion: OpenStreetMap Nominatim con cabecera User-Agent correcta
+  function geocodificarNominatim(lat, lng) {
+    return fetch(
+      'https://nominatim.openstreetmap.org/reverse?lat=' + lat + '&lon=' + lng +
+      '&format=jsonv2&accept-language=es&addressdetails=1',
+      { headers: { 'Accept': 'application/json' } }
+    )
+    .then(function(r) {
+      if (!r.ok) throw new Error('Nominatim error');
+      return r.json();
+    })
+    .then(function(data) {
+      if (!data || !data.address) throw new Error('Sin datos');
+      var a = data.address;
+      var partes = [];
+      if (a.road || a.pedestrian || a.path)       partes.push(a.road || a.pedestrian || a.path);
+      if (a.house_number)                          partes.push('#' + a.house_number);
+      if (a.suburb || a.neighbourhood || a.quarter) partes.push('Col. ' + (a.suburb || a.neighbourhood || a.quarter));
+      if (a.city_district || a.borough)            partes.push(a.city_district || a.borough);
+      if (a.city || a.town || a.village)           partes.push(a.city || a.town || a.village);
+      if (a.state)                                 partes.push(a.state);
+      if (a.postcode)                              partes.push('CP ' + a.postcode);
+      return partes.length > 0 ? partes.join(', ') : data.display_name;
+    });
+  }
+ 
   if ('geolocation' in navigator) {
-    document.getElementById('scan-dir-inicio').textContent = '📍 Obteniendo ubicación...';
-    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + hora;
-    document.getElementById('scan-card-inicio').style.display = 'block';
-
     navigator.geolocation.getCurrentPosition(
       function(pos) {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        let direccion = lat.toFixed(6) + ', ' + lng.toFixed(6);
-
-        fetch(
-          'https://nominatim.openstreetmap.org/reverse?lat=' + lat + '&lon=' + lng +
-          '&format=json&accept-language=es'
-        )
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (data && data.display_name) direccion = data.display_name;
-        })
-        .catch(function() {})
-        .finally(function() {
-          ubicacionActual = { lat: lat, lng: lng, direccion: direccion };
-          scanLog = { hora: hora, coords: lat.toFixed(6) + ', ' + lng.toFixed(6), direccion: direccion };
-          mostrarScanInicio(scanLog);
-          document.getElementById('map-btn-inicio').style.display = 'inline-block';
-
-          // Guardar en localStorage
-          try {
-            const logs = JSON.parse(localStorage.getItem('emergencia_scans') || '[]');
-            logs.push({ hora: hora, lat: lat, lng: lng, direccion: direccion });
-            localStorage.setItem('emergencia_scans', JSON.stringify(logs.slice(-50)));
-          } catch(e) {}
-        });
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+ 
+        // Intentar BigDataCloud primero, luego Nominatim, luego coordenadas directas
+        geocodificarBigDataCloud(lat, lng)
+          .catch(function() { return geocodificarNominatim(lat, lng); })
+          .then(function(direccion) {
+            ubicacionActual = { lat: lat, lng: lng, direccion: direccion };
+            scanLog = { hora: hora, coords: lat.toFixed(6) + ', ' + lng.toFixed(6), direccion: direccion };
+            guardarLog(lat, lng, direccion);
+            actualizarUI(scanLog);
+          })
+          .catch(function() {
+            // Si ambas APIs fallan, usar coordenadas directas
+            usarCoordsDirectas(lat, lng);
+          });
       },
-      function() {
-        scanLog = { hora: hora, coords: 'No disponible', direccion: 'Ubicación no autorizada por el usuario' };
-        mostrarScanInicio(scanLog);
+      function(err) {
+        var msg = '';
+        if (err.code === 1)      msg = 'Permiso de ubicacion denegado por el usuario.';
+        else if (err.code === 2) msg = 'Ubicacion no disponible. Verifica el GPS del dispositivo.';
+        else if (err.code === 3) msg = 'Tiempo de espera agotado al obtener ubicacion.';
+        else                     msg = 'No se pudo obtener la ubicacion.';
+        scanLog = { hora: hora, coords: 'No disponible', direccion: msg };
+        actualizarUI(scanLog);
       },
-      { timeout: 10000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
     );
   } else {
-    scanLog = { hora: hora, coords: 'No soportado', direccion: 'Geolocalización no disponible en este dispositivo' };
-    const card = document.getElementById('scan-card-inicio');
-    card.style.display = 'block';
-    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + hora;
-    document.getElementById('scan-dir-inicio').textContent = '📍 ' + scanLog.direccion;
+    scanLog = { hora: hora, coords: 'No soportado', direccion: 'Este dispositivo no soporta GPS.' };
+    actualizarUI(scanLog);
   }
 })();
-</script>
-</body>
-</html>
+<scriptt>
+<bodyy>
+<htmll>
