@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="ID de Emergencia Vial — Sistema de respuesta rapida para accidentes de transito" />
+  <title>ID de Emergencia Vial</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #F1F5F9;
+      padding: 12px 0 40px;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    /* ---------- HEADER ---------- */
+    .header {
+      text-align: center;
+      padding: 32px 0 24px;
+    }
+
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.55); }
+      70%  { box-shadow: 0 0 0 22px rgba(220,38,38,0); }
+      100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+    }
+
+    .pulse-ring {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: #DC2626;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      animation: pulse 2s infinite;
+    }
+
+    .cross-icon { font-size: 38px; color: #fff; font-weight: 900; line-height: 1; }
+    .header-title { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 6px; letter-spacing: -0.5px; }
+    .header-subtitle { font-size: 13px; color: #94A3B8; }
+
+    /* ---------- CARDS ---------- */
+    .scan-card {
+      background: #1e3a2f;
+      border: 1px solid #16a34a;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .scan-card-title { font-size: 13px; font-weight: 700; color: #4ade80; margin-bottom: 6px; }
+    .scan-text { font-size: 12px; color: #86efac; margin: 2px 0; }
+
+    /* ---------- EMERGENCY BTN ---------- */
+    .emergency-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #DC2626, #B91C1C);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      padding: 22px 20px;
+      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 32px rgba(220,38,38,0.45);
+      transition: transform 0.1s, box-shadow 0.1s;
+      text-align: center;
+    }
+    .emergency-btn:active { transform: scale(0.97); box-shadow: 0 4px 16px rgba(220,38,38,0.3); }
+    .emergency-btn-icon { font-size: 40px; }
+    .emergency-btn-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+    .emergency-btn-sub { font-size: 13px; opacity: 0.85; }
+
+    /* ---------- MAP BTN ---------- */
+    .map-btn {
+      background: #1D4ED8; color: #fff; border: none;
+      border-radius: 8px; padding: 8px 14px;
+      font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 8px;
+    }
+
+    /* ---------- INSTRUCTIONS ---------- */
+    .instruct-card {
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+    }
+    .instruct-toggle {
+      width: 100%; background: none; border: none;
+      color: #93C5FD; font-size: 13px; font-weight: 700;
+      padding: 14px 16px; text-align: left; cursor: pointer;
+    }
+    .instruct-body { padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .step { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: #CBD5E1; }
+    .step-num {
+      min-width: 26px; height: 26px; border-radius: 50%;
+      background: #DC2626; color: #fff;
+      font-size: 13px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .step-warn { background: #FEF3C7; border-radius: 8px; padding: 10px 12px; margin-top: 4px; }
+    .step-warn .step-num { background: #D97706; }
+    .step-warn div { font-size: 13px; color: #78350F; }
+
+    /* ---------- BUTTONS ---------- */
+    .emer-btn {
+      width: 100%; background: #1e293b; color: #60A5FA;
+      border: 1px solid #334155; border-radius: 12px;
+      padding: 14px 16px; font-size: 14px; font-weight: 700;
+      cursor: pointer; margin-bottom: 12px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer { text-align: center; margin-top: 32px; }
+    .footer-text { font-size: 11px; color: #475569; }
+
+    /* ---------- TOP BAR ---------- */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0 12px; margin-bottom: 8px;
+    }
+    .back-btn {
+      background: none; border: 1px solid #334155; color: #94A3B8;
+      border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer;
+    }
+    .top-bar-badge {
+      background: #DC2626; color: #fff; border-radius: 20px;
+      padding: 6px 14px; font-size: 12px; font-weight: 800; letter-spacing: 0.5px;
+    }
+    .top-bar-badge-blue {
+      background: #1D4ED8; color: #fff; border-radius: 20px;
+      padding: 6px 14px; font-size: 12px; font-weight: 800;
+    }
+
+    /* ---------- PERSON HEADER ---------- */
+    .person-header {
+      background: #1e293b; border: 1px solid #334155; border-radius: 16px;
+      padding: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+    }
+    .person-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #DC2626; color: #fff; font-size: 20px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .person-name { font-size: 20px; font-weight: 900; color: #F1F5F9; margin-bottom: 4px; }
+    .person-meta { font-size: 12px; color: #94A3B8; margin: 1px 0; }
+
+    /* ---------- BLOOD CARD ---------- */
+    .blood-card {
+      background: linear-gradient(135deg, #7f1d1d, #991b1b);
+      border: 2px solid #DC2626; border-radius: 16px;
+      padding: 16px 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 12px;
+    }
+    .blood-icon { font-size: 40px; }
+    .blood-label { font-size: 11px; color: #FCA5A5; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .blood-value { font-size: 40px; font-weight: 900; color: #fff; line-height: 1; }
+    .marcapaso-badge {
+      background: #F59E0B; color: #fff; border-radius: 8px;
+      padding: 6px 10px; font-size: 11px; font-weight: 800; margin-left: auto;
+    }
+
+    /* ---------- ALERT CARD ---------- */
+    .alert-card {
+      background: #431407; border: 2px solid #EA580C;
+      border-radius: 12px; padding: 14px; margin-bottom: 12px;
+    }
+    .alert-title {
+      font-size: 13px; font-weight: 800; color: #FED7AA;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag-alert {
+      background: #DC2626; color: #fff; border-radius: 20px;
+      padding: 4px 12px; font-size: 12px; font-weight: 700;
+    }
+
+    /* ---------- INFO CARD ---------- */
+    .info-card {
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 12px; padding: 14px; margin-bottom: 12px;
+    }
+    .info-card-blue { border-left: 4px solid #3B82F6; }
+    .info-card-yellow { border-left: 4px solid #F59E0B; }
+    .card-title {
+      font-size: 13px; font-weight: 800; color: #93C5FD;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .list-item { font-size: 14px; color: #CBD5E1; margin-bottom: 4px; }
+
+    /* ---------- DONOR CARD ---------- */
+    .donor-card {
+      background: #1a1a2e; border: 2px solid #ec4899;
+      border-radius: 12px; padding: 12px 16px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+      color: #f9a8d4; font-weight: 700; font-size: 14px;
+    }
+
+    /* ---------- SECTION TITLE ---------- */
+    .section-title {
+      font-size: 15px; font-weight: 800; color: #E2E8F0;
+      margin-bottom: 10px; margin-top: 6px;
+      border-bottom: 2px solid #334155; padding-bottom: 8px;
+    }
+
+    /* ---------- CONTACT CARD ---------- */
+    .contact-card {
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 14px; padding: 14px; margin-bottom: 12px;
+    }
+    .contact-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .contact-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #0369A1; color: #fff; font-size: 16px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-name { font-size: 15px; font-weight: 700; color: #F1F5F9; }
+    .contact-rel { font-size: 12px; color: #64748B; }
+    .call-btn {
+      margin-left: auto; background: #16A34A; color: #fff; border: none;
+      border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+    }
+    .contact-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .wa-btn {
+      flex: 1; background: #16A34A; color: #fff; border: none;
+      border-radius: 8px; padding: 10px 8px; font-size: 13px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .sms-btn {
+      flex: 1; background: #7C3AED; color: #fff; border: none;
+      border-radius: 8px; padding: 10px 8px; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .email-btn {
+      flex: 1; background: #0369A1; color: #fff; border: none;
+      border-radius: 8px; padding: 10px 8px; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+
+    /* ---------- MSG CARD ---------- */
+    .msg-card {
+      background: #0f172a; border: 1px solid #1E40AF;
+      border-radius: 12px; padding: 14px; margin-bottom: 16px;
+    }
+    .msg-pre {
+      font-size: 12px; color: #93C5FD; white-space: pre-wrap;
+      word-break: break-word; margin-bottom: 12px;
+      font-family: monospace; line-height: 1.6;
+    }
+    .copy-btn {
+      width: 100%; background: #1D4ED8; color: #fff; border: none;
+      border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .copy-btn.copied { background: #16A34A; }
+
+    /* ---------- SOS 911 ---------- */
+    .sos-911 {
+      width: 100%; background: linear-gradient(135deg, #DC2626, #B91C1C);
+      color: #fff; border: none; border-radius: 14px;
+      padding: 18px; font-size: 18px; font-weight: 900;
+      cursor: pointer; margin-bottom: 12px; letter-spacing: -0.5px;
+      box-shadow: 0 6px 24px rgba(220,38,38,0.4);
+    }
+
+    /* ---------- EMERGENCIAS ---------- */
+    .emerg-num-card {
+      width: 100%; background: #1e293b; border: 1px solid #334155;
+      border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; text-align: left;
+    }
+    .emerg-num-left { display: flex; align-items: center; gap: 12px; }
+    .emerg-num-name { font-weight: 700; font-size: 14px; color: #F1F5F9; }
+    .emerg-num-val { font-size: 13px; font-weight: 800; }
+    .call-tag { color: #fff; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 800; }
+
+    /* ---------- VIEWS ---------- */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ---------- HIDDEN ---------- */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     ▼▼▼  DATOS DE LA PERSONA — EDITA AQUI  ▼▼▼
+     ============================================================ -->
+<script>
+const PERSONA = {
+  // ── DATOS PERSONALES ──────────────────────────────────────
+  nombre:          "Juan Carlos",              // ← Nombre(s)
+  apellidos:       "Martínez López",           // ← Apellido(s)
+  fechaNacimiento: "1990-05-14",               // ← YYYY-MM-DD
+  sexo:            "Masculino",                // ← Masculino / Femenino / Otro
+  curp:            "MALJ900514HDFRRN09",       // ← CURP (dejar vacío si no aplica)
+  nss:             "12345678901",              // ← Número Seguridad Social IMSS
+
+  // ── DATOS MÉDICOS CRÍTICOS ────────────────────────────────
+  tipoSangre:         "O+",                    // ← A+, A-, B+, B-, AB+, AB-, O+, O-
+  alergias:           ["Penicilina","Aspirina","Polen"], // ← [] si ninguna
+  medicamentos:       ["Metformina 850mg (diabetes)","Losartán 50mg (presión)"],
+  condicionesMedicas: ["Diabetes tipo 2","Hipertensión arterial"],
+  discapacidades:     "",                      // ← dejar vacío si ninguna
+  marcapaso:          false,                   // ← true / false
+  donadorOrganos:     true,                    // ← true / false
+  notasMedicas:       "Paciente con intolerancia a AINEs. NO administrar ibuprofeno ni naproxeno.",
+
+  // ── SEGURO MÉDICO ─────────────────────────────────────────
+  seguroMedico:     "IMSS",                    // ← IMSS / ISSSTE / Seguro Popular / Privado / Ninguno
+  numeroPoliza:     "123456789",               // ← Número póliza o afiliación
+  hospitalAsignado: "Hospital General Dr. Enrique Cabrera, CDMX",
+
+  // ── VEHÍCULO ──────────────────────────────────────────────
+  tipoVehiculo:  "Motocicleta",                // ← Moto / Bicicleta eléctrica / Scooter / Auto / etc.
+  marcaVehiculo: "Honda",
+  modeloVehiculo:"CB500F",
+  colorVehiculo: "Rojo",
+  placas:        "ABC-1234",
+
+  // ── CONTACTOS DE EMERGENCIA ───────────────────────────────
+  // Orden: más importante primero. Agrega o quita objetos {}
+  contactos: [
+    {
+      nombre:   "María López",                 // ← Nombre completo
+      relacion: "Esposa",                      // ← Parentesco
+      telefono: "5512345678",                  // ← 10 dígitos sin guiones
+      whatsapp: "5512345678",                  // ← igual al teléfono o diferente
+      email:    "maria.lopez@email.com",       // ← Correo (puede quedar vacío "")
+    },
+    {
+      nombre:   "Roberto Martínez",
+      relacion: "Padre",
+      telefono: "5598765432",
+      whatsapp: "5598765432",
+      email:    "roberto.martinez@email.com",
+    },
+    {
+      nombre:   "Ana Martínez López",
+      relacion: "Hermana",
+      telefono: "5587654321",
+      whatsapp: "5587654321",
+      email:    "ana.martinez@email.com",
+    },
+  ],
+
+  // ── DIRECCIÓN DE CASA ─────────────────────────────────────
+  domicilio: {
+    calle:       "Calle Morelos",
+    numero:      "245",
+    colonia:     "Del Valle Centro",
+    alcaldia:    "Benito Juárez",
+    ciudad:      "Ciudad de México",
+    cp:          "03100",
+    referencias: "Entre Insurgentes y Eje 3 Sur, casa color beige",
+  },
+};
+</script>
+<!-- ============================================================
+     ▲▲▲  FIN DE DATOS — NO MODIFIQUES MÁS ABAJO  ▲▲▲
+     ============================================================ -->
+
+<div class="container">
+
+  <!-- ════════ VISTA: INICIO ════════ -->
+  <div id="view-inicio" class="view active">
+
+    <div class="header">
+      <div class="pulse-ring"><span class="cross-icon">✚</span></div>
+      <h1 class="header-title">ID de Emergencia</h1>
+      <p class="header-subtitle">Sistema de Respuesta Rápida para Accidentes</p>
+    </div>
+
+    <div id="scan-card-inicio" class="scan-card" style="display:none">
+      <div class="scan-card-title">&#128225; Escaneo registrado automáticamente</div>
+      <p class="scan-text" id="scan-hora-inicio"></p>
+      <p class="scan-text" id="scan-dir-inicio"></p>
+      <button class="map-btn" id="map-btn-inicio" style="display:none" onclick="abrirMapa()">
+        &#128506; Ver ubicación en Google Maps
+      </button>
+    </div>
+
+    <button class="emergency-btn" onclick="irA('datos')">
+      <span class="emergency-btn-icon">&#128680;</span>
+      <span class="emergency-btn-text">¡ESTO ES UNA EMERGENCIA!</span>
+      <span class="emergency-btn-sub">Presiona para ver datos de la persona</span>
+    </button>
+
+    <div class="instruct-card">
+      <button class="instruct-toggle" onclick="toggleInstrucciones()">
+        &#9660; ¿Qué hacer si encontraste este código QR?
+      </button>
+      <div id="instrucciones" class="instruct-body" style="display:none">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>Llama al <strong>911</strong> de inmediato si hay heridos graves.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>Presiona el botón rojo <strong>"¡ESTO ES UNA EMERGENCIA!"</strong> para ver los datos médicos de la persona.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>Comparte la información con los <strong>paramédicos o servicios de emergencia</strong>.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>Usa los botones de <strong>WhatsApp, SMS o llamada</strong> para avisar a los familiares.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div>La <strong>ubicación exacta</strong> ya fue registrada automáticamente al escanear.</div>
+        </div>
+        <div class="step step-warn">
+          <div class="step-num" style="background:#D97706">!</div>
+          <div>NO muevas a la persona si sospechas lesión de columna. Espera a los paramédicos.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Números de Emergencia México / CDMX</button>
+
+    <div class="footer">
+      <p class="footer-text">Sistema de Identificación de Emergencias Viales</p>
+      <p class="footer-text" style="opacity:0.5;font-size:10px;margin-top:4px">
+        Este código QR contiene datos médicos privados. Úselo solo en caso de emergencia.
+      </p>
+    </div>
+  </div><!-- /view-inicio -->
+
+
+  <!-- ════════ VISTA: DATOS ════════ -->
+  <div id="view-datos" class="view">
+
+    <div class="top-bar">
+      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver</button>
+      <div class="top-bar-badge">&#128680; MODO EMERGENCIA</div>
+    </div>
+
+    <!-- Nombre -->
+    <div class="person-header">
+      <div class="person-avatar" id="person-initials"></div>
+      <div>
+        <div class="person-name" id="person-fullname"></div>
+        <div class="person-meta" id="person-age-sex"></div>
+        <div class="person-meta" id="person-vehicle"></div>
+      </div>
+    </div>
+
+    <!-- Tipo de sangre -->
+    <div class="blood-card">
+      <div class="blood-icon">&#129754;</div>
+      <div>
+        <div class="blood-label">TIPO DE SANGRE</div>
+        <div class="blood-value" id="blood-type"></div>
+      </div>
+      <div class="marcapaso-badge" id="marcapaso-badge" style="display:none">&#9889; MARCAPASO</div>
+    </div>
+
+    <!-- Alergias -->
+    <div class="alert-card" id="alergias-card" style="display:none">
+      <div class="alert-title">&#9888;&#65039; ALERGIAS — NO ADMINISTRAR</div>
+      <div class="tag-row" id="alergias-tags"></div>
+    </div>
+
+    <!-- Condiciones -->
+    <div class="info-card" id="condiciones-card" style="display:none">
+      <div class="card-title">&#127973; Condiciones Médicas</div>
+      <div id="condiciones-list"></div>
+    </div>
+
+    <!-- Medicamentos -->
+    <div class="info-card" id="medicamentos-card" style="display:none">
+      <div class="card-title">&#128138; Medicamentos Actuales</div>
+      <div id="medicamentos-list"></div>
+    </div>
+
+    <!-- Notas médicas -->
+    <div class="info-card info-card-yellow" id="notas-card" style="display:none">
+      <div class="card-title">&#128203; Notas Importantes</div>
+      <p id="notas-text" style="font-size:14px;color:#CBD5E1;margin:0;line-height:1.5"></p>
+    </div>
+
+    <!-- Donador -->
+    <div class="donor-card" id="donor-card" style="display:none">
+      <span style="font-size:22px">&#10084;&#65039;</span>
+      <span>DONADOR DE ÓRGANOS</span>
+    </div>
+
+    <!-- Seguro -->
+    <div class="info-card">
+      <div class="card-title">&#127970; Seguro / Derechohabiencia</div>
+      <div class="list-item" id="seg-institucion"></div>
+      <div class="list-item" id="seg-poliza" style="display:none"></div>
+      <div class="list-item" id="seg-hospital" style="display:none"></div>
+      <div class="list-item" id="seg-nss" style="display:none"></div>
+      <div class="list-item" id="seg-curp" style="display:none"></div>
+    </div>
+
+    <!-- Ubicación -->
+    <div class="info-card info-card-blue">
+      <div class="card-title">&#128205; Ubicación del Accidente</div>
+      <p id="ubicacion-texto" style="font-size:13px;color:#CBD5E1;margin:4px 0;line-height:1.5">Obteniendo ubicación GPS...</p>
+      <p id="ubicacion-coords" style="font-size:12px;color:#6B7280;margin:2px 0"></p>
+      <button class="map-btn" id="map-btn-datos" style="display:none" onclick="abrirMapa()">
+        &#128506; Abrir en Google Maps
+      </button>
+    </div>
+
+    <!-- Domicilio -->
+    <div class="info-card">
+      <div class="card-title">&#127968; Domicilio de la Persona</div>
+      <p id="dom-calle" style="font-size:14px;color:#CBD5E1;margin:4px 0"></p>
+      <p id="dom-ciudad" style="font-size:13px;color:#6B7280;margin:2px 0"></p>
+      <p id="dom-ref" style="font-size:12px;color:#94A3B8;margin:4px 0"></p>
+    </div>
+
+    <!-- Contactos -->
+    <div class="section-title">&#128101; Contactos de Emergencia</div>
+    <div id="contactos-container"></div>
+
+    <!-- Mensaje automático -->
+    <div class="section-title">&#128228; Mensaje Automático de Emergencia</div>
+    <div class="msg-card">
+      <pre class="msg-pre" id="msg-auto"></pre>
+      <button class="copy-btn" id="copy-btn" onclick="copiarMensaje()">&#128203; Copiar mensaje completo</button>
+    </div>
+
+    <!-- 911 -->
+    <button class="sos-911" onclick="llamar('911')">&#128680; LLAMAR AL 911 — EMERGENCIAS</button>
+    <button class="emer-btn" onclick="irA('emergencias')">&#128222; Ver todos los números de emergencia</button>
+
+    <!-- Registro escaneo -->
+    <div class="scan-card" id="scan-card-datos" style="display:none;margin-top:16px;font-size:12px">
+      <div class="scan-card-title">&#128225; Registro del escaneo</div>
+      <p class="scan-text" id="scan-hora-datos"></p>
+      <p class="scan-text" id="scan-dir-datos"></p>
+      <p class="scan-text" id="scan-coords-datos" style="opacity:0.6"></p>
+    </div>
+
+    <div class="footer" style="margin-top:24px">
+      <p class="footer-text">ID de Emergencia Vial · Datos guardados localmente</p>
+    </div>
+  </div><!-- /view-datos -->
+
+
+  <!-- ════════ VISTA: EMERGENCIAS ════════ -->
+  <div id="view-emergencias" class="view">
+
+    <div class="top-bar">
+      <button class="back-btn" onclick="irA('inicio')">&#8592; Volver</button>
+      <div class="top-bar-badge-blue">&#128222; EMERGENCIAS</div>
+    </div>
+
+    <h2 style="font-size:20px;font-weight:800;text-align:center;margin-bottom:4px">
+      Números de Emergencia
+    </h2>
+    <p style="font-size:13px;color:#6B7280;text-align:center;margin-bottom:20px">México · CDMX · 2026</p>
+
+    <div id="emergencias-container"></div>
+
+    <div class="footer" style="margin-top:24px">
+      <p class="footer-text">Toca cualquier número para llamar directamente</p>
+    </div>
+  </div><!-- /view-emergencias -->
+
+</div><!-- /container -->
+
+<script>
+/* ── Estado global ── */
+let ubicacionActual = null;
+let scanLog = null;
+
+const EMERGENCIAS_MX = [
+  { nombre: "Emergencias (Único Nacional)", numero: "911",          color: "#DC2626" },
+  { nombre: "Cruz Roja Mexicana",           numero: "065",          color: "#DC2626" },
+  { nombre: "ERUM — CDMX",                  numero: "5556580001",   color: "#B45309" },
+  { nombre: "Bomberos CDMX",                numero: "068",          color: "#B45309" },
+  { nombre: "Policía Preventiva CDMX",      numero: "088",          color: "#1D4ED8" },
+  { nombre: "Policía Federal Carreteras",   numero: "8000044800",   color: "#1D4ED8" },
+  { nombre: "LOCATEL",                      numero: "5556581111",   color: "#047857" },
+  { nombre: "CAPUFE — Carreteras",          numero: "8000023777",   color: "#047857" },
+  { nombre: "SSP CDMX",                     numero: "5556580400",   color: "#1D4ED8" },
+  { nombre: "Línea Mujeres CDMX",           numero: "8000010800",   color: "#9333EA" },
+  { nombre: "DIF Nacional",                 numero: "8000040800",   color: "#D97706" },
+  { nombre: "Toxicología / Intoxicaciones", numero: "5556889145",   color: "#DC2626" },
+];
+
+/* ── Navegación ── */
+function irA(vista) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + vista).classList.add('active');
+  window.scrollTo(0, 0);
+  if (vista === 'datos') renderDatos();
+  if (vista === 'emergencias') renderEmergencias();
+}
+
+/* ── Calcular edad ── */
+function calcularEdad(fechaNac) {
+  const hoy = new Date();
+  const nac = new Date(fechaNac);
+  let edad = hoy.getFullYear() - nac.getFullYear();
+  const m = hoy.getMonth() - nac.getMonth();
+  if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--;
+  return edad;
+}
+
+/* ── Generador de mensaje ── */
+function generarMensaje() {
+  const dir = ubicacionActual ? ubicacionActual.direccion : 'Ubicación no disponible';
+  const mapsLink = ubicacionActual
+    ? 'https://maps.google.com/?q=' + ubicacionActual.lat + ',' + ubicacionActual.lng
+    : '';
+  const hora = scanLog ? scanLog.hora : new Date().toLocaleString('es-MX');
+  const contactosStr = PERSONA.contactos
+    .map((c, i) => (i + 1) + '. ' + c.nombre + ' (' + c.relacion + '): ' + c.telefono)
+    .join('\n');
+
+  return (
+    '🚨 EMERGENCIA - ACCIDENTE DE TRÁNSITO 🚨\n\n' +
+    'Se reporta que ' + PERSONA.nombre + ' ' + PERSONA.apellidos + ' ha tenido un ACCIDENTE.\n\n' +
+    '📋 DATOS MÉDICOS:\n' +
+    '• Tipo de Sangre: ' + PERSONA.tipoSangre + '\n' +
+    '• Alergias: ' + (PERSONA.alergias.length > 0 ? PERSONA.alergias.join(', ') : 'Ninguna conocida') + '\n' +
+    '• Condiciones: ' + (PERSONA.condicionesMedicas.length > 0 ? PERSONA.condicionesMedicas.join(', ') : 'Ninguna') + '\n' +
+    '• Medicamentos: ' + (PERSONA.medicamentos.length > 0 ? PERSONA.medicamentos.join(', ') : 'Ninguno') + '\n\n' +
+    '📍 UBICACIÓN DEL ACCIDENTE:\n' + dir + '\n' +
+    (mapsLink ? '🗺️ Ver en mapa: ' + mapsLink + '\n' : '') +
+    '⏰ Hora del reporte: ' + hora + '\n\n' +
+    '📞 CONTACTOS DE EMERGENCIA:\n' + contactosStr + '\n\n' +
+    '⚠️ Por favor comuníquese de inmediato. Esta es una emergencia real.'
+  );
+}
+
+/* ── Acciones ── */
+function llamar(num) { window.location.href = 'tel:' + num; }
+
+function abrirWhatsApp(tel) {
+  const msg = encodeURIComponent(generarMensaje());
+  window.open('https://wa.me/52' + tel + '?text=' + msg, '_blank');
+}
+
+function enviarSMS(tel) {
+  const msg = encodeURIComponent(generarMensaje());
+  window.open('sms:' + tel + '?body=' + msg, '_blank');
+}
+
+function enviarEmail(email) {
+  const asunto = encodeURIComponent('🚨 EMERGENCIA - ' + PERSONA.nombre + ' ' + PERSONA.apellidos);
+  const msg = encodeURIComponent(generarMensaje());
+  window.open('mailto:' + email + '?subject=' + asunto + '&body=' + msg, '_blank');
+}
+
+function abrirMapa() {
+  if (ubicacionActual) {
+    window.open('https://maps.google.com/?q=' + ubicacionActual.lat + ',' + ubicacionActual.lng, '_blank');
+  }
+}
+
+function copiarMensaje() {
+  const btn = document.getElementById('copy-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(generarMensaje()).then(function() {
+      btn.textContent = '✅ ¡Copiado!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '📋 Copiar mensaje completo';
+        btn.classList.remove('copied');
+      }, 2500);
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = generarMensaje();
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ ¡Copiado!';
+    setTimeout(function() { btn.textContent = '📋 Copiar mensaje completo'; }, 2500);
+  }
+}
+
+function toggleInstrucciones() {
+  const el = document.getElementById('instrucciones');
+  const btn = el.previousElementSibling;
+  if (el.style.display === 'none') {
+    el.style.display = 'flex';
+    btn.textContent = '▲ ¿Qué hacer si encontraste este código QR?';
+  } else {
+    el.style.display = 'none';
+    btn.textContent = '▼ ¿Qué hacer si encontraste este código QR?';
+  }
+}
+
+/* ── Render DATOS ── */
+function renderDatos() {
+  const edad = PERSONA.fechaNacimiento ? calcularEdad(PERSONA.fechaNacimiento) : '?';
+
+  // Persona
+  document.getElementById('person-initials').textContent =
+    PERSONA.nombre.charAt(0) + PERSONA.apellidos.charAt(0);
+  document.getElementById('person-fullname').textContent =
+    PERSONA.nombre + ' ' + PERSONA.apellidos;
+  document.getElementById('person-age-sex').textContent =
+    edad + ' años · ' + PERSONA.sexo;
+  if (PERSONA.tipoVehiculo) {
+    document.getElementById('person-vehicle').textContent =
+      '🏍️ ' + PERSONA.tipoVehiculo + ' ' + PERSONA.marcaVehiculo + ' ' +
+      PERSONA.modeloVehiculo + ' — Placas: ' + PERSONA.placas;
+  }
+
+  // Sangre
+  document.getElementById('blood-type').textContent = PERSONA.tipoSangre;
+  if (PERSONA.marcapaso) document.getElementById('marcapaso-badge').style.display = 'block';
+
+  // Alergias
+  if (PERSONA.alergias.length > 0) {
+    const card = document.getElementById('alergias-card');
+    const tags = document.getElementById('alergias-tags');
+    card.style.display = 'block';
+    tags.innerHTML = PERSONA.alergias.map(function(a) {
+      return '<span class="tag-alert">' + a + '</span>';
+    }).join('');
+  }
+
+  // Condiciones
+  if (PERSONA.condicionesMedicas.length > 0) {
+    document.getElementById('condiciones-card').style.display = 'block';
+    document.getElementById('condiciones-list').innerHTML =
+      PERSONA.condicionesMedicas.map(function(c) {
+        return '<div class="list-item">• ' + c + '</div>';
+      }).join('');
+  }
+
+  // Medicamentos
+  if (PERSONA.medicamentos.length > 0) {
+    document.getElementById('medicamentos-card').style.display = 'block';
+    document.getElementById('medicamentos-list').innerHTML =
+      PERSONA.medicamentos.map(function(m) {
+        return '<div class="list-item">• ' + m + '</div>';
+      }).join('');
+  }
+
+  // Notas
+  if (PERSONA.notasMedicas) {
+    document.getElementById('notas-card').style.display = 'block';
+    document.getElementById('notas-text').textContent = PERSONA.notasMedicas;
+  }
+
+  // Donador
+  if (PERSONA.donadorOrganos) document.getElementById('donor-card').style.display = 'flex';
+
+  // Seguro
+  document.getElementById('seg-institucion').innerHTML = '<strong>Institución:</strong> ' + PERSONA.seguroMedico;
+  if (PERSONA.numeroPoliza) {
+    document.getElementById('seg-poliza').style.display = 'block';
+    document.getElementById('seg-poliza').innerHTML = '<strong>No. Póliza / Afiliación:</strong> ' + PERSONA.numeroPoliza;
+  }
+  if (PERSONA.hospitalAsignado) {
+    document.getElementById('seg-hospital').style.display = 'block';
+    document.getElementById('seg-hospital').innerHTML = '<strong>Hospital:</strong> ' + PERSONA.hospitalAsignado;
+  }
+  if (PERSONA.nss) {
+    document.getElementById('seg-nss').style.display = 'block';
+    document.getElementById('seg-nss').innerHTML = '<strong>NSS:</strong> ' + PERSONA.nss;
+  }
+  if (PERSONA.curp) {
+    document.getElementById('seg-curp').style.display = 'block';
+    document.getElementById('seg-curp').innerHTML = '<strong>CURP:</strong> ' + PERSONA.curp;
+  }
+
+  // Domicilio
+  document.getElementById('dom-calle').textContent =
+    PERSONA.domicilio.calle + ' #' + PERSONA.domicilio.numero + ', Col. ' + PERSONA.domicilio.colonia;
+  document.getElementById('dom-ciudad').textContent =
+    PERSONA.domicilio.alcaldia + ', ' + PERSONA.domicilio.ciudad + ' — CP ' + PERSONA.domicilio.cp;
+  if (PERSONA.domicilio.referencias) {
+    document.getElementById('dom-ref').textContent = 'Ref: ' + PERSONA.domicilio.referencias;
+  }
+
+  // Ubicación actual
+  if (ubicacionActual) {
+    document.getElementById('ubicacion-texto').textContent = ubicacionActual.direccion;
+    document.getElementById('ubicacion-coords').textContent =
+      'Coordenadas: ' + ubicacionActual.lat.toFixed(6) + ', ' + ubicacionActual.lng.toFixed(6);
+    document.getElementById('map-btn-datos').style.display = 'inline-block';
+  } else {
+    document.getElementById('ubicacion-texto').textContent = 'Ubicación no disponible o no autorizada.';
+  }
+
+  // Scan log datos
+  if (scanLog) {
+    const sc = document.getElementById('scan-card-datos');
+    sc.style.display = 'block';
+    document.getElementById('scan-hora-datos').textContent = '🕐 ' + scanLog.hora;
+    document.getElementById('scan-dir-datos').textContent = '📍 ' + scanLog.direccion;
+    document.getElementById('scan-coords-datos').textContent = 'Coordenadas: ' + scanLog.coords;
+  }
+
+  // Contactos
+  const cont = document.getElementById('contactos-container');
+  cont.innerHTML = '';
+  PERSONA.contactos.forEach(function(c) {
+    const whatsappNum = c.whatsapp || c.telefono;
+    const emailBtn = c.email
+      ? '<button class="email-btn" onclick="enviarEmail(\'' + c.email + '\')">✉️ Email</button>'
+      : '';
+    cont.innerHTML +=
+      '<div class="contact-card">' +
+        '<div class="contact-header">' +
+          '<div class="contact-avatar">' + c.nombre.charAt(0) + '</div>' +
+          '<div>' +
+            '<div class="contact-name">' + c.nombre + '</div>' +
+            '<div class="contact-rel">' + c.relacion + '</div>' +
+          '</div>' +
+          '<button class="call-btn" onclick="llamar(\'' + c.telefono + '\')">📞 Llamar</button>' +
+        '</div>' +
+        '<div class="contact-actions">' +
+          '<button class="wa-btn" onclick="abrirWhatsApp(\'' + whatsappNum + '\')">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right:4px">' +
+              '<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>' +
+            '</svg>' +
+            'WhatsApp' +
+          '</button>' +
+          '<button class="sms-btn" onclick="enviarSMS(\'' + c.telefono + '\')">💬 SMS</button>' +
+          emailBtn +
+        '</div>' +
+      '</div>';
+  });
+
+  // Mensaje auto
+  document.getElementById('msg-auto').textContent = generarMensaje();
+}
+
+/* ── Render EMERGENCIAS ── */
+function renderEmergencias() {
+  const cont = document.getElementById('emergencias-container');
+  if (cont.innerHTML !== '') return; // ya renderizado
+  cont.innerHTML = EMERGENCIAS_MX.map(function(e) {
+    return (
+      '<button class="emerg-num-card" style="border-left:5px solid ' + e.color + '" onclick="llamar(\'' + e.numero + '\')">' +
+        '<div class="emerg-num-left">' +
+          '<div>' +
+            '<div class="emerg-num-name">' + e.nombre + '</div>' +
+            '<div class="emerg-num-val" style="color:' + e.color + '">' + e.numero + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="call-tag" style="background:' + e.color + '">Llamar</div>' +
+      '</button>'
+    );
+  }).join('');
+}
+
+/* ── Registro automático de escaneo + geolocalización ── */
+(function registrarEscaneo() {
+  const hora = new Date().toLocaleString('es-MX', {
+    timeZone: 'America/Mexico_City',
+    dateStyle: 'full',
+    timeStyle: 'medium',
+  });
+
+  function mostrarScanInicio(log) {
+    const card = document.getElementById('scan-card-inicio');
+    card.style.display = 'block';
+    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + log.hora;
+    document.getElementById('scan-dir-inicio').textContent = '📍 ' + log.direccion;
+    if (ubicacionActual) {
+      document.getElementById('map-btn-inicio').style.display = 'inline-block';
+    }
+  }
+
+  if ('geolocation' in navigator) {
+    document.getElementById('scan-dir-inicio').textContent = '📍 Obteniendo ubicación...';
+    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + hora;
+    document.getElementById('scan-card-inicio').style.display = 'block';
+
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        let direccion = lat.toFixed(6) + ', ' + lng.toFixed(6);
+
+        fetch(
+          'https://nominatim.openstreetmap.org/reverse?lat=' + lat + '&lon=' + lng +
+          '&format=json&accept-language=es'
+        )
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.display_name) direccion = data.display_name;
+        })
+        .catch(function() {})
+        .finally(function() {
+          ubicacionActual = { lat: lat, lng: lng, direccion: direccion };
+          scanLog = { hora: hora, coords: lat.toFixed(6) + ', ' + lng.toFixed(6), direccion: direccion };
+          mostrarScanInicio(scanLog);
+          document.getElementById('map-btn-inicio').style.display = 'inline-block';
+
+          // Guardar en localStorage
+          try {
+            const logs = JSON.parse(localStorage.getItem('emergencia_scans') || '[]');
+            logs.push({ hora: hora, lat: lat, lng: lng, direccion: direccion });
+            localStorage.setItem('emergencia_scans', JSON.stringify(logs.slice(-50)));
+          } catch(e) {}
+        });
+      },
+      function() {
+        scanLog = { hora: hora, coords: 'No disponible', direccion: 'Ubicación no autorizada por el usuario' };
+        mostrarScanInicio(scanLog);
+      },
+      { timeout: 10000, maximumAge: 0 }
+    );
+  } else {
+    scanLog = { hora: hora, coords: 'No soportado', direccion: 'Geolocalización no disponible en este dispositivo' };
+    const card = document.getElementById('scan-card-inicio');
+    card.style.display = 'block';
+    document.getElementById('scan-hora-inicio').textContent = '🕐 ' + hora;
+    document.getElementById('scan-dir-inicio').textContent = '📍 ' + scanLog.direccion;
+  }
+})();
+</script>
+</body>
+</html>
