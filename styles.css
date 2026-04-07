@@ -1,0 +1,921 @@
+/* ============================================
+   EMERGENCY ID - SISTEMA DE EMERGENCIA MÉDICA
+   Diseño Moderno 2026 - Responsive
+   Colores: Rojo Emergencia, Azul Médico, Blanco
+   ============================================ */
+
+:root {
+    /* Paleta de Colores 2026 - Emergencia Médica */
+    --emergency-red: #DC2626;
+    --emergency-red-dark: #991B1B;
+    --emergency-red-light: #FEE2E2;
+    --medical-blue: #2563EB;
+    --medical-blue-dark: #1E40AF;
+    --medical-blue-light: #DBEAFE;
+    --alert-orange: #F97316;
+    --success-green: #10B981;
+    --dark-bg: #0F172A;
+    --card-bg: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #64748B;
+    --text-light: #94A3B8;
+    --border-color: #E2E8F0;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-heavy: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --gradient-emergency: linear-gradient(135deg, #DC2626 0%, #EF4444 50%, #F87171 100%);
+    --gradient-medical: linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+}
+
+/* Reset y Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   PANTALLAS
+   ============================================ */
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ============================================
+   PANTALLA DE INICIO - BOTÓN DE EMERGENCIA
+   ============================================ */
+
+#home-screen {
+    background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#home-screen .container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.emergency-header {
+    margin-bottom: 40px;
+}
+
+.pulse-icon {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.emergency-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 20px rgba(220, 38, 38, 0.5);
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-light);
+    font-weight: 300;
+}
+
+/* Instrucciones */
+.instructions-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 40px;
+    text-align: left;
+    backdrop-filter: blur(10px);
+}
+
+.instructions-box h3 {
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.instructions-box ol {
+    color: var(--text-light);
+    padding-left: 20px;
+}
+
+.instructions-box li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.instructions-box strong {
+    color: var(--emergency-red);
+    font-weight: 700;
+}
+
+/* Botón de Emergencia Principal */
+.emergency-button {
+    width: 100%;
+    max-width: 400px;
+    padding: 32px 40px;
+    background: var(--gradient-emergency);
+    border: none;
+    border-radius: var(--radius-xl);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4), 
+                0 0 0 4px rgba(220, 38, 38, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    animation: emergencyPulse 2s infinite;
+    margin: 0 auto 40px;
+}
+
+@keyframes emergencyPulse {
+    0%, 100% { 
+        box-shadow: 0 20px 60px rgba(220, 38, 38, 0.4), 
+                    0 0 0 4px rgba(220, 38, 38, 0.2),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        box-shadow: 0 25px 70px rgba(220, 38, 38, 0.6), 
+                    0 0 0 8px rgba(220, 38, 38, 0.3),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+.emergency-button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 30px 80px rgba(220, 38, 38, 0.5), 
+                0 0 0 6px rgba(220, 38, 38, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.emergency-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-icon {
+    font-size: 48px;
+    margin-bottom: 4px;
+}
+
+.btn-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-subtext {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Footer */
+.footer-note {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.scan-info {
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+    color: var(--emergency-red-light);
+}
+
+/* ============================================
+   PANTALLA DE EMERGENCIA ACTIVA
+   ============================================ */
+
+#emergency-screen {
+    background: #F8FAFC;
+    padding-bottom: 40px;
+}
+
+.emergency-banner {
+    background: var(--gradient-emergency);
+    color: #FFFFFF;
+    text-align: center;
+    padding: 16px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-heavy);
+}
+
+.pulse {
+    display: inline-block;
+    animation: textPulse 1s infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Secciones */
+section {
+    margin-bottom: 32px;
+}
+
+section h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--emergency-red);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ============================================
+   DATOS CRÍTICOS
+   ============================================ */
+
+.critical-data {
+    display: grid;
+    gap: 12px;
+}
+
+.data-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--medical-blue);
+    transition: all 0.3s ease;
+}
+
+.data-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.data-card.priority-1 {
+    border-left-color: var(--emergency-red);
+    background: linear-gradient(90deg, #FFFFFF 0%, var(--emergency-red-light) 100%);
+}
+
+.card-icon {
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--medical-blue-light);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.data-card.priority-1 .card-icon {
+    background: var(--emergency-red-light);
+}
+
+.card-content {
+    flex: 1;
+}
+
+.card-content label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.card-content .highlight {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+}
+
+.card-content .highlight.alert {
+    color: var(--emergency-red);
+    font-weight: 800;
+}
+
+/* ============================================
+   UBICACIÓN
+   ============================================ */
+
+.location-section {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.location-card {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--medical-blue);
+}
+
+.location-icon {
+    font-size: 40px;
+}
+
+.location-details p {
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.location-details .coords {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.location-details .timestamp {
+    font-size: 0.85rem;
+    color: var(--emergency-red);
+    font-weight: 600;
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--medical-blue);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--medical-blue-dark);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   ACCIONES RÁPIDAS
+   ============================================ */
+
+.quick-actions {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.action-buttons {
+    display: grid;
+    gap: 12px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.action-btn span {
+    font-size: 32px;
+}
+
+.action-btn div {
+    flex: 1;
+}
+
+.action-btn strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.action-btn small {
+    opacity: 0.9;
+    font-size: 0.85rem;
+}
+
+.action-btn.emergency-call {
+    background: var(--gradient-emergency);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.action-btn.emergency-call:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.action-btn.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.action-btn.whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+.action-btn.sms-btn {
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.action-btn.sms-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+/* ============================================
+   NÚMEROS DE EMERGENCIA
+   ============================================ */
+
+.emergency-numbers {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.number-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.number-card:hover {
+    border-color: var(--emergency-red);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.num-icon {
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--emergency-red-light);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.number-card div {
+    flex: 1;
+}
+
+.number-card strong {
+    display: block;
+    font-size: 1.25rem;
+    color: var(--emergency-red);
+    font-weight: 700;
+}
+
+.number-card span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   CONTACTOS DE EMERGENCIA
+   ============================================ */
+
+.emergency-contacts {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.contacts-list {
+    display: grid;
+    gap: 16px;
+}
+
+.contact-card {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    border-left: 4px solid var(--success-green);
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.contact-info h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.contact-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-call, .btn-whatsapp {
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-call {
+    background: var(--medical-blue);
+    color: #FFFFFF;
+}
+
+.btn-call:hover {
+    background: var(--medical-blue-dark);
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: #FFFFFF;
+}
+
+.btn-whatsapp:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   DATOS DEL PACIENTE
+   ============================================ */
+
+.patient-data {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.info-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    background: #F8FAFC;
+    border-radius: var(--radius-sm);
+}
+
+.info-item label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item span {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ============================================
+   NOTAS ADICIONALES
+   ============================================ */
+
+.additional-notes {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 2px solid #F59E0B;
+}
+
+.notes-box {
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   REGISTRO DE ACCESO
+   ============================================ */
+
+.access-log {
+    background: var(--dark-bg);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    color: #FFFFFF;
+}
+
+.access-log h2 {
+    color: #FFFFFF;
+    border-bottom-color: var(--emergency-red);
+}
+
+.log-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.log-box p {
+    margin-bottom: 12px;
+}
+
+.log-box strong {
+    color: var(--emergency-red-light);
+}
+
+.log-note {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   FOOTER ACTIONS
+   ============================================ */
+
+.footer-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.btn-print, .btn-reset {
+    flex: 1;
+    min-width: 150px;
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-print {
+    background: var(--text-secondary);
+    color: #FFFFFF;
+}
+
+.btn-print:hover {
+    background: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.btn-reset {
+    background: var(--emergency-red-light);
+    color: var(--emergency-red);
+    border: 2px solid var(--emergency-red);
+}
+
+.btn-reset:hover {
+    background: var(--emergency-red);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.disclaimer {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 640px) {
+    html {
+        font-size: 14px;
+    }
+
+    .emergency-header h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .emergency-button {
+        padding: 24px 20px;
+    }
+
+    .btn-text {
+        font-size: 1.2rem;
+    }
+
+    .btn-icon {
+        font-size: 36px;
+    }
+
+    .numbers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-actions {
+        width: 100%;
+    }
+
+    .btn-call, .btn-whatsapp {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .action-btn {
+        padding: 16px;
+    }
+
+    .action-btn span {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 380px) {
+    .container {
+        padding: 16px;
+    }
+
+    .emergency-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .btn-text {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+}
+
+/* ============================================
+   IMPRESIÓN
+   ============================================ */
+
+@media print {
+    #home-screen, .emergency-banner, .footer-actions, .btn-secondary {
+        display: none !important;
+    }
+
+    #emergency-screen {
+        display: block !important;
+    }
+
+    .screen {
+        animation: none;
+    }
+
+    body {
+        background: #FFFFFF;
+    }
+
+    section {
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+}
+
+/* ============================================
+   ANIMACIONES ADICIONALES
+   ============================================ */
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px rgba(220, 38, 38, 0.4); }
+    to { box-shadow: 0 0 40px rgba(220, 38, 38, 0.8); }
+}
