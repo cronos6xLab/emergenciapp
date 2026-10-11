@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Casa Vieja - Presentación Barbacoa</title>
+  <!-- Librería para generar PDF directamente -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     /* ==========================================
        CONFIGURACIÓN PARA EXPORTAR A PDF (A4)
        ========================================== */
     @page {
       size: A4;
-      margin: 12mm 15mm; /* Márgenes controlados por el navegador */
+      margin: 0;
     }
 
     * {
@@ -70,8 +72,8 @@
     .img-full {
       width: 100%;
       height: auto;
-      max-height: 380px; /* Tamaño grande y visible, como el ejemplo original */
-      object-fit: contain; /* Muestra la imagen completa sin recortar los bordes */
+      max-height: 380px; /* Tamaño grande y visible */
+      object-fit: contain; /* Muestra la imagen completa sin recortar */
       border-radius: 6px;
       display: block;
       margin: 0 auto;
@@ -153,7 +155,7 @@
       background-color: rgba(139, 115, 85, 0.1);
     }
 
-    /* Botón de impresión flotante */
+    /* Botón de generación de PDF */
     .print-btn {
       position: fixed;
       bottom: 20px;
@@ -171,36 +173,24 @@
       z-index: 1000;
     }
     .print-btn:hover { background-color: #5a4a3a; transform: scale(1.05); }
+    .print-btn:disabled { background-color: #999; cursor: wait; transform: none; }
 
     /* ==========================================
-       REGLAS ESTRICTAS DE IMPRESIÓN (PDF)
+       MODO PDF (Fuerza el tamaño A4 al generar)
        ========================================== */
-    @media print {
-      body { background-color: #fff; padding: 0; margin: 0; }
-      .print-btn, .btn-change-img { display: none !important; }
-      
-      .page {
-        box-shadow: none;
-        margin: 0;
-        width: 100%;
-        height: auto; /* Clave para que no se corte en el PDF */
-        min-height: 0;
-        page-break-after: always;
-        break-after: page;
-        background-color: #faf7f2; /* Forzar el fondo beige */
-        padding: 0;
-      }
-      .page:last-child { page-break-after: auto; break-after: auto; }
-      
-      [contenteditable="true"]:hover,
-      [contenteditable="true"]:focus {
-        outline: none !important;
-        background-color: transparent !important;
-      }
-      
-      .img-full {
-        max-height: 350px; /* Ajuste fino para impresión, mantiene el tamaño grande */
-      }
+    body.pdf-mode .page {
+      width: 210mm !important;
+      height: 297mm !important; /* Altura exacta A4 */
+      overflow: hidden !important; /* Evita desbordamiento */
+      transform: none !important;
+      margin: 0 auto !important;
+      box-shadow: none !important;
+      page-break-after: always;
+      break-after: page;
+    }
+    body.pdf-mode .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
     }
 
     /* Ajustes para pantallas pequeñas (móviles) */
@@ -214,94 +204,97 @@
 </head>
 <body>
 
-  <!-- Botón de impresión -->
-  <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  <!-- Botón de generación de PDF -->
+  <button id="btn-pdf" class="print-btn" onclick="generatePDF()">📄 Generar PDF</button>
 
-  <!-- PÁGINA 1 -->
-  <div class="page">
-    <div class="logo-container">
-      <img src="https://i.ibb.co/ZpMKCsQs/Photoroom-20261011-131738.png" alt="La Casa Vieja">
+  <!-- Contenedor principal para el PDF -->
+  <div id="pdf-content">
+    <!-- PÁGINA 1 -->
+    <div class="page">
+      <div class="logo-container">
+        <img src="https://i.ibb.co/ZpMKCsQs/Photoroom-20261011-131738.png" alt="La Casa Vieja">
+      </div>
+
+      <h1 contenteditable="true">PROYECTO DELEITE</h1>
+
+      <p contenteditable="true">
+        Presentamos una oportunidad única para enriquecer y diferenciar los bufetes de fin de semana en CDMX integrando en sus menús una deliciosa barbacoa de hoyo. Nos encantaría tener la oportunidad de colaborar y demostrar por qué nuestra barbacoa es considerada una de las mejores en la ciudad. Estamos convencidos de que esta alianza no solo fortalecerá la oferta culinaria de sus bufetes de fin de semana, sino que también proporcionará a sus huéspedes una experiencia gastronómica memorable.
+      </p>
+
+      <div class="img-container">
+        <img id="img1" class="img-full" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa" crossorigin="anonymous">
+        <input type="file" id="img1-input" accept="image/*" style="display: none;" onchange="changeImage('img1', this)">
+        <br><button class="btn-change-img" onclick="document.getElementById('img1-input').click()">Cambiar Imagen</button>
+      </div>
+
+      <p class="address" contenteditable="true">
+        Alejandría 35, Colonia Clavería, Delegación Azcapotzalco, Ciudad de México.
+      </p>
     </div>
 
-    <h1 contenteditable="true">PROYECTO DELEITE</h1>
+    <!-- PÁGINA 2 -->
+    <div class="page">
+      <h2 contenteditable="true">TE EXPLICAMOS EL PROCESO PARA HACER TU PEDIDO</h2>
 
-    <p contenteditable="true">
-      Presentamos una oportunidad única para enriquecer y diferenciar los bufetes de fin de semana en CDMX integrando en sus menús una deliciosa barbacoa de hoyo. Nos encantaría tener la oportunidad de colaborar y demostrar por qué nuestra barbacoa es considerada una de las mejores en la ciudad. Estamos convencidos de que esta alianza no solo fortalecerá la oferta culinaria de sus bufetes de fin de semana, sino que también proporcionará a sus huéspedes una experiencia gastronómica memorable.
-    </p>
+      <ul class="process-list">
+        <li contenteditable="true">Resolvemos cualquier duda de nuestro menú.</li>
+        <li contenteditable="true">Coordinamos métodos de entrega, horarios y pagos.</li>
+        <li contenteditable="true">Confirmamos tu pedido.</li>
+        <li contenteditable="true">Listo para que lo sirvas a tus comensales.</li>
+      </ul>
 
-    <div class="img-container">
-      <img id="img1" class="img-full" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
-      <input type="file" id="img1-input" accept="image/*" style="display: none;" onchange="changeImage('img1', this)">
-      <br><button class="btn-change-img" onclick="document.getElementById('img1-input').click()">Cambiar Imagen</button>
+      <div class="img-container">
+        <img id="img2" class="img-full" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional" crossorigin="anonymous">
+        <input type="file" id="img2-input" accept="image/*" style="display: none;" onchange="changeImage('img2', this)">
+        <br><button class="btn-change-img" onclick="document.getElementById('img2-input').click()">Cambiar Imagen</button>
+      </div>
     </div>
 
-    <p class="address" contenteditable="true">
-      Alejandría 35, Colonia Clavería, Delegación Azcapotzalco, Ciudad de México.
-    </p>
+    <!-- PÁGINA 3 -->
+    <div class="page">
+      <h2 contenteditable="true">SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
+
+      <div class="img-container">
+        <img id="img3" class="img-full" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa" crossorigin="anonymous">
+        <input type="file" id="img3-input" accept="image/*" style="display: none;" onchange="changeImage('img3', this)">
+        <br><button class="btn-change-img" onclick="document.getElementById('img3-input').click()">Cambiar Imagen</button>
+      </div>
+
+      <div class="precios">
+        <p contenteditable="true">Kilo de barbacoa sin hueso $1,020.80</p>
+        <p contenteditable="true">Kilo de pancita $1,020.80</p>
+        <p contenteditable="true">Litro de consomé $220.40</p>
+        <p class="nota" contenteditable="true">* Precios con IVA incluido.</p>
+      </div>
+    </div>
+
+    <!-- PÁGINA 4 -->
+    <div class="page">
+      <h2 contenteditable="true">OFRECEMOS</h2>
+
+      <div class="feature-block">
+        <h3 contenteditable="true">CALIDAD Y AUTENTICIDAD</h3>
+        <p contenteditable="true">Barbacoa de horno preparada con técnicas tradicionales, garantizando un sabor auténtico y una experiencia gastronómica única.</p>
+      </div>
+
+      <div class="feature-block">
+        <h3 contenteditable="true">FRESCURA Y SABOR</h3>
+        <p contenteditable="true">Utilizamos solo los mejores ingredientes, asegurando que cada bocado sea una explosión de sabor.</p>
+      </div>
+
+      <div class="feature-block">
+        <h3 contenteditable="true">PERSONALIZACIÓN</h3>
+        <p contenteditable="true">Adaptamos nuestras porciones y presentaciones para satisfacer las necesidades específicas de sus bufetes, asegurando una integración perfecta con su menú existente.</p>
+      </div>
+
+      <div class="feature-block">
+        <h3 contenteditable="true">SERVICIO CONFIABLE</h3>
+        <p contenteditable="true">Compromiso con la puntualidad y la calidad en cada entrega, garantizando que sus bufetes siempre ofrezcan lo mejor a sus huéspedes.</p>
+      </div>
+    </div>
   </div>
 
-  <!-- PÁGINA 2 -->
-  <div class="page">
-    <h2 contenteditable="true">TE EXPLICAMOS EL PROCESO PARA HACER TU PEDIDO</h2>
-
-    <ul class="process-list">
-      <li contenteditable="true">Resolvemos cualquier duda de nuestro menú.</li>
-      <li contenteditable="true">Coordinamos métodos de entrega, horarios y pagos.</li>
-      <li contenteditable="true">Confirmamos tu pedido.</li>
-      <li contenteditable="true">Listo para que lo sirvas a tus comensales.</li>
-    </ul>
-
-    <div class="img-container">
-      <img id="img2" class="img-full" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
-      <input type="file" id="img2-input" accept="image/*" style="display: none;" onchange="changeImage('img2', this)">
-      <br><button class="btn-change-img" onclick="document.getElementById('img2-input').click()">Cambiar Imagen</button>
-    </div>
-  </div>
-
-  <!-- PÁGINA 3 -->
-  <div class="page">
-    <h2 contenteditable="true">SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
-
-    <div class="img-container">
-      <img id="img3" class="img-full" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
-      <input type="file" id="img3-input" accept="image/*" style="display: none;" onchange="changeImage('img3', this)">
-      <br><button class="btn-change-img" onclick="document.getElementById('img3-input').click()">Cambiar Imagen</button>
-    </div>
-
-    <div class="precios">
-      <p contenteditable="true">Kilo de barbacoa sin hueso $1,020.80</p>
-      <p contenteditable="true">Kilo de pancita $1,020.80</p>
-      <p contenteditable="true">Litro de consomé $220.40</p>
-      <p class="nota" contenteditable="true">* Precios con IVA incluido.</p>
-    </div>
-  </div>
-
-  <!-- PÁGINA 4 -->
-  <div class="page">
-    <h2 contenteditable="true">OFRECEMOS</h2>
-
-    <div class="feature-block">
-      <h3 contenteditable="true">CALIDAD Y AUTENTICIDAD</h3>
-      <p contenteditable="true">Barbacoa de horno preparada con técnicas tradicionales, garantizando un sabor auténtico y una experiencia gastronómica única.</p>
-    </div>
-
-    <div class="feature-block">
-      <h3 contenteditable="true">FRESCURA Y SABOR</h3>
-      <p contenteditable="true">Utilizamos solo los mejores ingredientes, asegurando que cada bocado sea una explosión de sabor.</p>
-    </div>
-
-    <div class="feature-block">
-      <h3 contenteditable="true">PERSONALIZACIÓN</h3>
-      <p contenteditable="true">Adaptamos nuestras porciones y presentaciones para satisfacer las necesidades específicas de sus bufetes, asegurando una integración perfecta con su menú existente.</p>
-    </div>
-
-    <div class="feature-block">
-      <h3 contenteditable="true">SERVICIO CONFIABLE</h3>
-      <p contenteditable="true">Compromiso con la puntualidad y la calidad en cada entrega, garantizando que sus bufetes siempre ofrezcan lo mejor a sus huéspedes.</p>
-    </div>
-  </div>
-
-  <!-- Script para cambiar imágenes -->
+  <!-- Script para cambiar imágenes y generar PDF -->
   <script>
     function changeImage(imgId, input) {
       if (input.files && input.files[0]) {
@@ -311,6 +304,53 @@
         };
         reader.readAsDataURL(input.files[0]);
       }
+    }
+
+    function generatePDF() {
+      const btn = document.getElementById('btn-pdf');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Generando...';
+      btn.disabled = true;
+
+      // Ocultar botones de cambiar imagen y el botón de PDF
+      const hiddenElements = document.querySelectorAll('.btn-change-img, .print-btn');
+      hiddenElements.forEach(el => el.style.display = 'none');
+
+      // Forzar tamaño A4 en el contenedor
+      document.body.classList.add('pdf-mode');
+
+      const element = document.getElementById('pdf-content');
+      
+      const opt = {
+        margin:       0,
+        filename:     'Presentacion_Barbacoa_LaCasaVieja.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+          scale: 2, 
+          useCORS: true, 
+          allowTaint: true,
+          backgroundColor: '#faf7f2',
+          logging: false
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      // Generar y descargar PDF
+      html2pdf().set(opt).from(element).save().then(() => {
+        // Restaurar elementos
+        document.body.classList.remove('pdf-mode');
+        hiddenElements.forEach(el => el.style.display = '');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }).catch(err => {
+        console.error('Error al generar PDF:', err);
+        alert('Hubo un error al generar el PDF. Revisa la consola.');
+        document.body.classList.remove('pdf-mode');
+        hiddenElements.forEach(el => el.style.display = '');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      });
     }
   </script>
 
