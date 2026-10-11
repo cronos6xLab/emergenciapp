@@ -6,11 +6,11 @@
   <title>La Casa Vieja - Presentación Barbacoa</title>
   <style>
     /* ==========================================
-       CONFIGURACIÓN ESTRICTA PARA EXPORTAR A PDF
+       CONFIGURACIÓN PARA EXPORTAR A PDF (A4)
        ========================================== */
     @page {
       size: A4;
-      margin: 0; /* El margen se maneja dentro de .page */
+      margin: 12mm 15mm; /* Márgenes controlados por el navegador */
     }
 
     * {
@@ -29,30 +29,19 @@
       padding: 20px 0;
     }
 
-    /* Contenedor exacto de tamaño A4 */
+    /* Contenedor de cada página */
     .page {
       width: 210mm;
-      height: 297mm; /* Altura fija para evitar desbordamiento */
+      min-height: 297mm; /* En pantalla se ve como A4 */
       background-color: #faf7f2;
       margin: 15px auto;
       padding: 15mm 18mm;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       position: relative;
-      page-break-after: always;
-      break-after: page;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      overflow: hidden; /* Evita que el contenido se salga de la hoja */
-    }
-
-    .page:last-child {
-      page-break-after: auto;
-      break-after: auto;
-    }
-
-    /* Evitar que los elementos se corten a la mitad */
-    .precios, .feature-block, .process-list li, .img-container {
+      /* Evita que los elementos se corten a la mitad */
       page-break-inside: avoid;
       break-inside: avoid;
     }
@@ -60,32 +49,29 @@
     /* Tipografías */
     h1, h2, h3 { font-weight: normal; letter-spacing: 0.03em; }
 
-    h1 { font-size: 2.2rem; color: #3b3229; text-align: center; margin: 15px 0 10px 0; }
-    h2 { font-size: 1.8rem; color: #3b3229; text-align: center; margin: 15px 0; text-transform: uppercase; letter-spacing: 0.08em; }
-    h3 { font-size: 1.3rem; color: #5a4a3a; margin: 10px 0 5px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    h1 { font-size: 2.2rem; color: #3b3229; text-align: center; margin: 10px 0 15px 0; }
+    h2 { font-size: 1.7rem; color: #3b3229; text-align: center; margin: 10px 0 15px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+    h3 { font-size: 1.2rem; color: #5a4a3a; margin: 10px 0 5px 0; text-transform: uppercase; letter-spacing: 0.05em; }
     
-    p { font-size: 1rem; line-height: 1.5; margin-bottom: 12px; text-align: justify; }
+    p { font-size: 0.98rem; line-height: 1.5; margin-bottom: 12px; text-align: justify; }
 
     /* Logo */
-    .logo-container { text-align: center; margin-bottom: 5px; }
-    .logo-container img { max-width: 320px; width: 100%; height: auto; }
+    .logo-container { text-align: center; margin-bottom: 10px; }
+    .logo-container img { max-width: 300px; width: 100%; height: auto; }
 
-    /* Imágenes y botones para cambiarlas */
-    .img-container { text-align: center; margin: 10px 0; position: relative; }
+    /* Imágenes y botones */
+    .img-container { text-align: center; margin: 15px 0; position: relative; }
     
     .img-full {
       width: 100%;
+      max-width: 100%;
       height: auto;
-      max-height: 260px; /* Altura máxima para que no rompa la hoja */
-      object-fit: cover;
+      max-height: 200px; /* Altura máxima ajustada para no romper la hoja */
+      object-fit: contain; /* Muestra la imagen completa sin recortar */
       border-radius: 6px;
       display: block;
       margin: 0 auto;
     }
-
-    .img-taco { max-height: 280px; }
-    .img-fire { max-height: 280px; }
-    .img-hands { max-height: 250px; }
 
     .btn-change-img {
       background-color: #8b7355;
@@ -104,42 +90,43 @@
     /* Lista de proceso */
     .process-list { list-style: none; padding-left: 0; margin: 15px 0; }
     .process-list li {
-      font-size: 1.05rem;
-      padding: 10px 0 10px 30px;
+      font-size: 1rem;
+      padding: 8px 0 8px 25px;
       position: relative;
       border-bottom: 1px solid #d9cec0;
     }
     .process-list li::before {
       content: "•";
       color: #8b7355;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       position: absolute;
       left: 5px;
-      top: 2px;
+      top: 0px;
     }
 
     /* Precios */
     .precios {
       background-color: #f0ebe3;
-      padding: 20px 25px;
+      padding: 15px 20px;
       border-radius: 8px;
-      margin: 20px 0;
-      border-left: 6px solid #8b7355;
+      margin: 15px 0;
+      border-left: 5px solid #8b7355;
+      page-break-inside: avoid;
     }
-    .precios p { font-size: 1.2rem; margin: 8px 0; text-align: left; font-weight: bold; color: #3b3229; }
-    .precios .nota { font-size: 0.9rem; font-weight: normal; color: #6b5e4f; margin-top: 10px; }
+    .precios p { font-size: 1.1rem; margin: 6px 0; text-align: left; font-weight: bold; color: #3b3229; }
+    .precios .nota { font-size: 0.85rem; font-weight: normal; color: #6b5e4f; margin-top: 8px; }
 
     /* Secciones de la página 4 */
-    .feature-block { margin: 15px 0; padding-bottom: 10px; border-bottom: 1px solid #e0d6c8; }
+    .feature-block { margin: 12px 0; padding-bottom: 8px; border-bottom: 1px solid #e0d6c8; page-break-inside: avoid; }
     .feature-block:last-of-type { border-bottom: none; }
-    .feature-block p { margin-bottom: 0; font-size: 0.98rem; }
+    .feature-block p { margin-bottom: 0; font-size: 0.95rem; }
 
     /* Dirección */
     .address {
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #5a4a3a;
-      margin-top: 15px;
+      margin-top: 10px;
       font-style: italic;
     }
 
@@ -157,8 +144,8 @@
     /* Botón de impresión flotante */
     .print-btn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 20px;
+      right: 20px;
       background-color: #3b3229;
       color: #faf7f2;
       border: none;
@@ -174,7 +161,7 @@
     .print-btn:hover { background-color: #5a4a3a; transform: scale(1.05); }
 
     /* ==========================================
-       REGLAS ESTRICTAS DE IMPRESIÓN
+       REGLAS ESTRICTAS DE IMPRESIÓN (PDF)
        ========================================== */
     @media print {
       body { background-color: #fff; padding: 0; margin: 0; }
@@ -182,27 +169,31 @@
       
       .page {
         box-shadow: none;
-        margin: 0 auto;
-        width: 210mm;
-        height: 297mm;
+        margin: 0;
+        width: 100%;
+        height: auto; /* Permitir que el navegador ajuste la altura */
+        min-height: 0;
         page-break-after: always;
         break-after: page;
-        background-color: #faf7f2; /* Forzar el color de fondo */
-        padding: 15mm 18mm;
+        background-color: #faf7f2; /* Forzar el fondo beige */
+        padding: 0;
       }
       .page:last-child { page-break-after: auto; break-after: auto; }
       
-      /* Quitar efectos visuales de edición en el PDF final */
       [contenteditable="true"]:hover,
       [contenteditable="true"]:focus {
         outline: none !important;
         background-color: transparent !important;
       }
+      
+      .img-full {
+        max-height: 180px; /* Reducir un poco más en impresión para asegurar que quepa */
+      }
     }
 
-    /* Ajustes para pantallas pequeñas */
+    /* Ajustes para pantallas pequeñas (móviles) */
     @media (max-width: 800px) {
-      .page { width: 100%; height: auto; min-height: 297mm; padding: 20px; margin: 10px 0; }
+      .page { width: 100%; min-height: auto; padding: 20px; margin: 10px 0; }
       h1 { font-size: 1.8rem; }
       h2 { font-size: 1.4rem; }
       .print-btn { bottom: 15px; right: 15px; padding: 12px 20px; font-size: 1rem; }
@@ -217,7 +208,7 @@
   <!-- PÁGINA 1 -->
   <div class="page">
     <div class="logo-container">
-      <img src="https://i.ibb.co/ZpMKCsQs/Photoroom-20261011-131738.png" alt="La Casa Vieja - Barbacoa desde 1989">
+      <img src="https://i.ibb.co/ZpMKCsQs/Photoroom-20261011-131738.png" alt="La Casa Vieja">
     </div>
 
     <h1 contenteditable="true">PROYECTO DELEITE</h1>
@@ -227,7 +218,7 @@
     </p>
 
     <div class="img-container">
-      <img id="img1" class="img-full img-taco" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
+      <img id="img1" class="img-full" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
       <input type="file" id="img1-input" accept="image/*" style="display: none;" onchange="changeImage('img1', this)">
       <br><button class="btn-change-img" onclick="document.getElementById('img1-input').click()">Cambiar Imagen</button>
     </div>
@@ -249,7 +240,7 @@
     </ul>
 
     <div class="img-container">
-      <img id="img2" class="img-full img-fire" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
+      <img id="img2" class="img-full" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
       <input type="file" id="img2-input" accept="image/*" style="display: none;" onchange="changeImage('img2', this)">
       <br><button class="btn-change-img" onclick="document.getElementById('img2-input').click()">Cambiar Imagen</button>
     </div>
@@ -260,7 +251,7 @@
     <h2 contenteditable="true">SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
 
     <div class="img-container">
-      <img id="img3" class="img-full img-hands" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
+      <img id="img3" class="img-full" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
       <input type="file" id="img3-input" accept="image/*" style="display: none;" onchange="changeImage('img3', this)">
       <br><button class="btn-change-img" onclick="document.getElementById('img3-input').click()">Cambiar Imagen</button>
     </div>
