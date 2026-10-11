@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Casa Vieja - Presentación Barbacoa</title>
   <style>
+    /* Configuración de página para impresión */
+    @page {
+      size: A4;
+      margin: 15mm 15mm 15mm 15mm;
+    }
+
     /* Reset y estilos generales */
     * {
       margin: 0;
@@ -28,7 +34,7 @@
       min-height: 297mm;
       background-color: #faf7f2;
       margin: 15px auto;
-      padding: 25mm 20mm 20mm 20mm;
+      padding: 20mm 20mm 15mm 20mm;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       position: relative;
       page-break-after: always;
@@ -52,7 +58,6 @@
       color: #3b3229;
       text-align: center;
       margin: 15px 0 10px 0;
-      font-family: 'Georgia', serif;
     }
 
     h2 {
@@ -100,20 +105,9 @@
       object-fit: cover;
     }
 
-    .img-taco {
-      max-height: 320px;
-      object-fit: cover;
-    }
-
-    .img-fire {
-      max-height: 380px;
-      object-fit: cover;
-    }
-
-    .img-hands {
-      max-height: 340px;
-      object-fit: cover;
-    }
+    .img-taco { max-height: 320px; }
+    .img-fire { max-height: 380px; }
+    .img-hands { max-height: 340px; }
 
     /* Lista de proceso */
     .process-list {
@@ -145,6 +139,7 @@
       border-radius: 8px;
       margin: 20px 0;
       border-left: 6px solid #8b7355;
+      page-break-inside: avoid;
     }
 
     .precios p {
@@ -167,6 +162,7 @@
       margin: 18px 0;
       padding-bottom: 12px;
       border-bottom: 1px solid #e0d6c8;
+      page-break-inside: avoid;
     }
 
     .feature-block:last-of-type {
@@ -193,22 +189,66 @@
       letter-spacing: 0.02em;
     }
 
+    /* Campos editables */
+    [contenteditable="true"]:hover {
+      outline: 1px dashed #8b7355;
+      background-color: rgba(139, 115, 85, 0.05);
+      cursor: text;
+    }
+    [contenteditable="true"]:focus {
+      outline: 2px solid #8b7355;
+      background-color: rgba(139, 115, 85, 0.1);
+    }
+
+    /* Botón de impresión */
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #3b3229;
+      color: #faf7f2;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-family: 'Georgia', serif;
+      transition: background-color 0.3s, transform 0.2s;
+      z-index: 1000;
+    }
+
+    .print-btn:hover {
+      background-color: #5a4a3a;
+      transform: scale(1.05);
+    }
+
     /* Ajustes de impresión */
     @media print {
       body {
         background-color: #fff;
         padding: 0;
+        margin: 0;
+      }
+      .print-btn {
+        display: none !important;
       }
       .page {
         box-shadow: none;
-        margin: 0;
+        margin: 0 auto;
         width: 100%;
-        min-height: 100vh;
+        min-height: auto;
         page-break-after: always;
-        padding: 15mm 18mm;
+        padding: 0;
+        background-color: transparent;
       }
       .page:last-child {
         page-break-after: auto;
+      }
+      [contenteditable="true"]:hover,
+      [contenteditable="true"]:focus {
+        outline: none !important;
+        background-color: transparent !important;
       }
     }
 
@@ -223,10 +263,19 @@
       h1 { font-size: 1.8rem; }
       h2 { font-size: 1.4rem; }
       h3 { font-size: 1.1rem; }
+      .print-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Botón de impresión -->
+  <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
 
   <!-- PÁGINA 1 -->
   <div class="page">
@@ -234,28 +283,28 @@
       <img src="https://i.ibb.co/ZpMKCsQs/Photoroom-20261011-131738.png" alt="La Casa Vieja - Barbacoa desde 1989">
     </div>
 
-    <h1>PROYECTO DELEITE</h1>
+    <h1 contenteditable="true">PROYECTO DELEITE</h1>
 
-    <p>
+    <p contenteditable="true">
       Presentamos una oportunidad única para enriquecer y diferenciar los bufetes de fin de semana en CDMX integrando en sus menús una deliciosa barbacoa de hoyo. Nos encantaría tener la oportunidad de colaborar y demostrar por qué nuestra barbacoa es considerada una de las mejores en la ciudad. Estamos convencidos de que esta alianza no solo fortalecerá la oferta culinaria de sus bufetes de fin de semana, sino que también proporcionará a sus huéspedes una experiencia gastronómica memorable.
     </p>
 
     <img class="img-full img-taco" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
 
-    <p class="address">
+    <p class="address" contenteditable="true">
       Alejandría 35, Colonia Clavería, Delegación Azcapotzalco, Ciudad de México.
     </p>
   </div>
 
   <!-- PÁGINA 2 -->
   <div class="page">
-    <h2>TE EXPLICAMOS EL PROCESO PARA HACER TU PEDIDO</h2>
+    <h2 contenteditable="true">TE EXPLICAMOS EL PROCESO PARA HACER TU PEDIDO</h2>
 
     <ul class="process-list">
-      <li>Resolvemos cualquier duda de nuestro menú.</li>
-      <li>Coordinamos métodos de entrega, horarios y pagos.</li>
-      <li>Confirmamos tu pedido.</li>
-      <li>Listo para que lo sirvas a tus comensales.</li>
+      <li contenteditable="true">Resolvemos cualquier duda de nuestro menú.</li>
+      <li contenteditable="true">Coordinamos métodos de entrega, horarios y pagos.</li>
+      <li contenteditable="true">Confirmamos tu pedido.</li>
+      <li contenteditable="true">Listo para que lo sirvas a tus comensales.</li>
     </ul>
 
     <img class="img-full img-fire" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
@@ -263,40 +312,40 @@
 
   <!-- PÁGINA 3 -->
   <div class="page">
-    <h2>SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
+    <h2 contenteditable="true">SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
 
     <img class="img-full img-hands" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
 
     <div class="precios">
-      <p>Kilo de barbacoa sin hueso $1,020.80</p>
-      <p>Kilo de pancita $1,020.80</p>
-      <p>Litro de consomé $220.40</p>
-      <p class="nota">* Precios con IVA incluido.</p>
+      <p contenteditable="true">Kilo de barbacoa sin hueso $1,020.80</p>
+      <p contenteditable="true">Kilo de pancita $1,020.80</p>
+      <p contenteditable="true">Litro de consomé $220.40</p>
+      <p class="nota" contenteditable="true">* Precios con IVA incluido.</p>
     </div>
   </div>
 
   <!-- PÁGINA 4 -->
   <div class="page">
-    <h2>OFRECEMOS</h2>
+    <h2 contenteditable="true">OFRECEMOS</h2>
 
     <div class="feature-block">
-      <h3>CALIDAD Y AUTENTICIDAD</h3>
-      <p>Barbacoa de horno preparada con técnicas tradicionales, garantizando un sabor auténtico y una experiencia gastronómica única.</p>
+      <h3 contenteditable="true">CALIDAD Y AUTENTICIDAD</h3>
+      <p contenteditable="true">Barbacoa de horno preparada con técnicas tradicionales, garantizando un sabor auténtico y una experiencia gastronómica única.</p>
     </div>
 
     <div class="feature-block">
-      <h3>FRESCURA Y SABOR</h3>
-      <p>Utilizamos solo los mejores ingredientes, asegurando que cada bocado sea una explosión de sabor.</p>
+      <h3 contenteditable="true">FRESCURA Y SABOR</h3>
+      <p contenteditable="true">Utilizamos solo los mejores ingredientes, asegurando que cada bocado sea una explosión de sabor.</p>
     </div>
 
     <div class="feature-block">
-      <h3>PERSONALIZACIÓN</h3>
-      <p>Adaptamos nuestras porciones y presentaciones para satisfacer las necesidades específicas de sus bufetes, asegurando una integración perfecta con su menú existente.</p>
+      <h3 contenteditable="true">PERSONALIZACIÓN</h3>
+      <p contenteditable="true">Adaptamos nuestras porciones y presentaciones para satisfacer las necesidades específicas de sus bufetes, asegurando una integración perfecta con su menú existente.</p>
     </div>
 
     <div class="feature-block">
-      <h3>SERVICIO CONFIABLE</h3>
-      <p>Compromiso con la puntualidad y la calidad en cada entrega, garantizando que sus bufetes siempre ofrezcan lo mejor a sus huéspedes.</p>
+      <h3 contenteditable="true">SERVICIO CONFIABLE</h3>
+      <p contenteditable="true">Compromiso con la puntualidad y la calidad en cada entrega, garantizando que sus bufetes siempre ofrezcan lo mejor a sus huéspedes.</p>
     </div>
   </div>
 
