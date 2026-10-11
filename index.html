@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Casa Vieja - Presentación Barbacoa</title>
   <style>
-    /* Configuración de página para impresión */
+    /* ==========================================
+       CONFIGURACIÓN ESTRICTA PARA EXPORTAR A PDF
+       ========================================== */
     @page {
       size: A4;
-      margin: 15mm 15mm 15mm 15mm;
+      margin: 0; /* El margen se maneja dentro de .page */
     }
 
-    /* Reset y estilos generales */
     * {
       margin: 0;
       padding: 0;
@@ -28,101 +29,86 @@
       padding: 20px 0;
     }
 
-    /* Contenedor de cada página */
+    /* Contenedor exacto de tamaño A4 */
     .page {
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm; /* Altura fija para evitar desbordamiento */
       background-color: #faf7f2;
       margin: 15px auto;
-      padding: 20mm 20mm 15mm 20mm;
+      padding: 15mm 18mm;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       position: relative;
       page-break-after: always;
+      break-after: page;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      overflow: hidden; /* Evita que el contenido se salga de la hoja */
     }
 
     .page:last-child {
       page-break-after: auto;
+      break-after: auto;
+    }
+
+    /* Evitar que los elementos se corten a la mitad */
+    .precios, .feature-block, .process-list li, .img-container {
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     /* Tipografías */
-    h1, h2, h3 {
-      font-weight: normal;
-      letter-spacing: 0.03em;
-    }
+    h1, h2, h3 { font-weight: normal; letter-spacing: 0.03em; }
 
-    h1 {
-      font-size: 2.2rem;
-      color: #3b3229;
-      text-align: center;
-      margin: 15px 0 10px 0;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      color: #3b3229;
-      text-align: center;
-      margin: 20px 0 15px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    h3 {
-      font-size: 1.3rem;
-      color: #5a4a3a;
-      margin: 15px 0 8px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 14px;
-      text-align: justify;
-    }
+    h1 { font-size: 2.2rem; color: #3b3229; text-align: center; margin: 15px 0 10px 0; }
+    h2 { font-size: 1.8rem; color: #3b3229; text-align: center; margin: 15px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+    h3 { font-size: 1.3rem; color: #5a4a3a; margin: 10px 0 5px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    p { font-size: 1rem; line-height: 1.5; margin-bottom: 12px; text-align: justify; }
 
     /* Logo */
-    .logo-container {
-      text-align: center;
-      margin-bottom: 10px;
-    }
+    .logo-container { text-align: center; margin-bottom: 5px; }
+    .logo-container img { max-width: 320px; width: 100%; height: auto; }
 
-    .logo-container img {
-      max-width: 320px;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Imágenes */
+    /* Imágenes y botones para cambiarlas */
+    .img-container { text-align: center; margin: 10px 0; position: relative; }
+    
     .img-full {
       width: 100%;
       height: auto;
-      border-radius: 6px;
-      margin: 12px 0;
+      max-height: 260px; /* Altura máxima para que no rompa la hoja */
       object-fit: cover;
+      border-radius: 6px;
+      display: block;
+      margin: 0 auto;
     }
 
-    .img-taco { max-height: 320px; }
-    .img-fire { max-height: 380px; }
-    .img-hands { max-height: 340px; }
+    .img-taco { max-height: 280px; }
+    .img-fire { max-height: 280px; }
+    .img-hands { max-height: 250px; }
+
+    .btn-change-img {
+      background-color: #8b7355;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+      font-family: Arial, sans-serif;
+      transition: background 0.3s;
+    }
+    .btn-change-img:hover { background-color: #5a4a3a; }
 
     /* Lista de proceso */
-    .process-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 20px 0;
-    }
-
+    .process-list { list-style: none; padding-left: 0; margin: 15px 0; }
     .process-list li {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       padding: 10px 0 10px 30px;
       position: relative;
       border-bottom: 1px solid #d9cec0;
     }
-
     .process-list li::before {
       content: "•";
       color: #8b7355;
@@ -139,45 +125,14 @@
       border-radius: 8px;
       margin: 20px 0;
       border-left: 6px solid #8b7355;
-      page-break-inside: avoid;
     }
-
-    .precios p {
-      font-size: 1.2rem;
-      margin: 8px 0;
-      text-align: left;
-      font-weight: bold;
-      color: #3b3229;
-    }
-
-    .precios .nota {
-      font-size: 0.9rem;
-      font-weight: normal;
-      color: #6b5e4f;
-      margin-top: 10px;
-    }
+    .precios p { font-size: 1.2rem; margin: 8px 0; text-align: left; font-weight: bold; color: #3b3229; }
+    .precios .nota { font-size: 0.9rem; font-weight: normal; color: #6b5e4f; margin-top: 10px; }
 
     /* Secciones de la página 4 */
-    .feature-block {
-      margin: 18px 0;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #e0d6c8;
-      page-break-inside: avoid;
-    }
-
-    .feature-block:last-of-type {
-      border-bottom: none;
-    }
-
-    .feature-block h3 {
-      margin-bottom: 5px;
-      color: #5a4a3a;
-    }
-
-    .feature-block p {
-      margin-bottom: 0;
-      font-size: 0.98rem;
-    }
+    .feature-block { margin: 15px 0; padding-bottom: 10px; border-bottom: 1px solid #e0d6c8; }
+    .feature-block:last-of-type { border-bottom: none; }
+    .feature-block p { margin-bottom: 0; font-size: 0.98rem; }
 
     /* Dirección */
     .address {
@@ -186,10 +141,9 @@
       color: #5a4a3a;
       margin-top: 15px;
       font-style: italic;
-      letter-spacing: 0.02em;
     }
 
-    /* Campos editables */
+    /* Campos editables visualmente */
     [contenteditable="true"]:hover {
       outline: 1px dashed #8b7355;
       background-color: rgba(139, 115, 85, 0.05);
@@ -200,7 +154,7 @@
       background-color: rgba(139, 115, 85, 0.1);
     }
 
-    /* Botón de impresión */
+    /* Botón de impresión flotante */
     .print-btn {
       position: fixed;
       bottom: 30px;
@@ -217,34 +171,28 @@
       transition: background-color 0.3s, transform 0.2s;
       z-index: 1000;
     }
+    .print-btn:hover { background-color: #5a4a3a; transform: scale(1.05); }
 
-    .print-btn:hover {
-      background-color: #5a4a3a;
-      transform: scale(1.05);
-    }
-
-    /* Ajustes de impresión */
+    /* ==========================================
+       REGLAS ESTRICTAS DE IMPRESIÓN
+       ========================================== */
     @media print {
-      body {
-        background-color: #fff;
-        padding: 0;
-        margin: 0;
-      }
-      .print-btn {
-        display: none !important;
-      }
+      body { background-color: #fff; padding: 0; margin: 0; }
+      .print-btn, .btn-change-img { display: none !important; }
+      
       .page {
         box-shadow: none;
         margin: 0 auto;
-        width: 100%;
-        min-height: auto;
+        width: 210mm;
+        height: 297mm;
         page-break-after: always;
-        padding: 0;
-        background-color: transparent;
+        break-after: page;
+        background-color: #faf7f2; /* Forzar el color de fondo */
+        padding: 15mm 18mm;
       }
-      .page:last-child {
-        page-break-after: auto;
-      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+      
+      /* Quitar efectos visuales de edición en el PDF final */
       [contenteditable="true"]:hover,
       [contenteditable="true"]:focus {
         outline: none !important;
@@ -252,23 +200,12 @@
       }
     }
 
-    /* Para pantallas pequeñas */
+    /* Ajustes para pantallas pequeñas */
     @media (max-width: 800px) {
-      .page {
-        width: 100%;
-        min-height: auto;
-        padding: 20px;
-        margin: 10px 0;
-      }
+      .page { width: 100%; height: auto; min-height: 297mm; padding: 20px; margin: 10px 0; }
       h1 { font-size: 1.8rem; }
       h2 { font-size: 1.4rem; }
-      h3 { font-size: 1.1rem; }
-      .print-btn {
-        bottom: 15px;
-        right: 15px;
-        padding: 12px 20px;
-        font-size: 1rem;
-      }
+      .print-btn { bottom: 15px; right: 15px; padding: 12px 20px; font-size: 1rem; }
     }
   </style>
 </head>
@@ -289,7 +226,11 @@
       Presentamos una oportunidad única para enriquecer y diferenciar los bufetes de fin de semana en CDMX integrando en sus menús una deliciosa barbacoa de hoyo. Nos encantaría tener la oportunidad de colaborar y demostrar por qué nuestra barbacoa es considerada una de las mejores en la ciudad. Estamos convencidos de que esta alianza no solo fortalecerá la oferta culinaria de sus bufetes de fin de semana, sino que también proporcionará a sus huéspedes una experiencia gastronómica memorable.
     </p>
 
-    <img class="img-full img-taco" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
+    <div class="img-container">
+      <img id="img1" class="img-full img-taco" src="https://i.ibb.co/SgftNjt/IMG-2062.jpg" alt="Tacos de barbacoa">
+      <input type="file" id="img1-input" accept="image/*" style="display: none;" onchange="changeImage('img1', this)">
+      <br><button class="btn-change-img" onclick="document.getElementById('img1-input').click()">Cambiar Imagen</button>
+    </div>
 
     <p class="address" contenteditable="true">
       Alejandría 35, Colonia Clavería, Delegación Azcapotzalco, Ciudad de México.
@@ -307,14 +248,22 @@
       <li contenteditable="true">Listo para que lo sirvas a tus comensales.</li>
     </ul>
 
-    <img class="img-full img-fire" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
+    <div class="img-container">
+      <img id="img2" class="img-full img-fire" src="https://i.ibb.co/S708XGkV/IMG-2063.jpg" alt="Fuego tradicional">
+      <input type="file" id="img2-input" accept="image/*" style="display: none;" onchange="changeImage('img2', this)">
+      <br><button class="btn-change-img" onclick="document.getElementById('img2-input').click()">Cambiar Imagen</button>
+    </div>
   </div>
 
   <!-- PÁGINA 3 -->
   <div class="page">
     <h2 contenteditable="true">SIRVE TU BARBACOA AUTÉNTICA EN TU RESTAURANTE</h2>
 
-    <img class="img-full img-hands" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
+    <div class="img-container">
+      <img id="img3" class="img-full img-hands" src="https://i.ibb.co/XkLjL2gx/IMG-2064.jpg" alt="Preparación de barbacoa">
+      <input type="file" id="img3-input" accept="image/*" style="display: none;" onchange="changeImage('img3', this)">
+      <br><button class="btn-change-img" onclick="document.getElementById('img3-input').click()">Cambiar Imagen</button>
+    </div>
 
     <div class="precios">
       <p contenteditable="true">Kilo de barbacoa sin hueso $1,020.80</p>
@@ -348,6 +297,19 @@
       <p contenteditable="true">Compromiso con la puntualidad y la calidad en cada entrega, garantizando que sus bufetes siempre ofrezcan lo mejor a sus huéspedes.</p>
     </div>
   </div>
+
+  <!-- Script para cambiar imágenes -->
+  <script>
+    function changeImage(imgId, input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById(imgId).src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 
 </body>
 </html>
