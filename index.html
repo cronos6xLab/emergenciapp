@@ -41,7 +41,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      /* Evita que los elementos se corten a la mitad */
       page-break-inside: avoid;
       break-inside: avoid;
     }
@@ -57,17 +56,22 @@
 
     /* Logo */
     .logo-container { text-align: center; margin-bottom: 10px; }
-    .logo-container img { max-width: 300px; width: 100%; height: auto; }
+    .logo-container img { max-width: 320px; width: 100%; height: auto; }
 
     /* Imágenes y botones */
-    .img-container { text-align: center; margin: 15px 0; position: relative; }
+    .img-container { 
+      text-align: center; 
+      margin: 15px 0; 
+      position: relative; 
+      page-break-inside: avoid; 
+      break-inside: avoid;
+    }
     
     .img-full {
       width: 100%;
-      max-width: 100%;
       height: auto;
-      max-height: 200px; /* Altura máxima ajustada para no romper la hoja */
-      object-fit: contain; /* Muestra la imagen completa sin recortar */
+      max-height: 380px; /* Tamaño grande y visible, como el ejemplo original */
+      object-fit: contain; /* Muestra la imagen completa sin recortar los bordes */
       border-radius: 6px;
       display: block;
       margin: 0 auto;
@@ -94,6 +98,7 @@
       padding: 8px 0 8px 25px;
       position: relative;
       border-bottom: 1px solid #d9cec0;
+      page-break-inside: avoid;
     }
     .process-list li::before {
       content: "•";
@@ -112,12 +117,19 @@
       margin: 15px 0;
       border-left: 5px solid #8b7355;
       page-break-inside: avoid;
+      break-inside: avoid;
     }
     .precios p { font-size: 1.1rem; margin: 6px 0; text-align: left; font-weight: bold; color: #3b3229; }
     .precios .nota { font-size: 0.85rem; font-weight: normal; color: #6b5e4f; margin-top: 8px; }
 
     /* Secciones de la página 4 */
-    .feature-block { margin: 12px 0; padding-bottom: 8px; border-bottom: 1px solid #e0d6c8; page-break-inside: avoid; }
+    .feature-block { 
+      margin: 12px 0; 
+      padding-bottom: 8px; 
+      border-bottom: 1px solid #e0d6c8; 
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
     .feature-block:last-of-type { border-bottom: none; }
     .feature-block p { margin-bottom: 0; font-size: 0.95rem; }
 
@@ -171,7 +183,7 @@
         box-shadow: none;
         margin: 0;
         width: 100%;
-        height: auto; /* Permitir que el navegador ajuste la altura */
+        height: auto; /* Clave para que no se corte en el PDF */
         min-height: 0;
         page-break-after: always;
         break-after: page;
@@ -187,7 +199,7 @@
       }
       
       .img-full {
-        max-height: 180px; /* Reducir un poco más en impresión para asegurar que quepa */
+        max-height: 350px; /* Ajuste fino para impresión, mantiene el tamaño grande */
       }
     }
 
